@@ -21,9 +21,9 @@ let config = {
         }
     },
     width: 1000,
-    height: 600,
-    scene: [ Menu, Play ]
-    // scene: [ Play ]
+    height: 800,
+    // scene: [ Menu, grassLevel ]
+    scene: [ grassLevel ]
 }
 
 let game = new Phaser.Game(config)
