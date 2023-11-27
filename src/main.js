@@ -1,5 +1,5 @@
 /*
-Endless Runner: Stick Run
+Dig Champs
 Names: Keaton Shawhan, Zoe Feller
 Date: 12/8/23
 Hours spent: 
@@ -17,7 +17,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: true
         }
     },
     width: 1000,
