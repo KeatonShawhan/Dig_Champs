@@ -57,18 +57,25 @@ class grassLevel extends Phaser.Scene {
 
     // swap places key
     this.swapKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.swapKeyPressed = false; // Flag to track key press state
+
 
     this.shovelPlayer_lives = 3;
     this.pickaxePlayer_lives = 3;
   }
 
   update() {
-    if (this.swapKey.isDown) {
-      let temp = [this.shovelPlayer.x, this.shovelPlayer.y]
-      this.shovelPlayer.x = this.pickaxePlayer.x
-      this.shovelPlayer.y = this.pickaxePlayer.y
-      this.pickaxePlayer.x = temp[0]
-      this.pickaxePlayer.y = temp[1]
+    // Check if the swap key was just pressed
+    if (Phaser.Input.Keyboard.JustDown(this.swapKey)) {
+      let temp = [this.shovelPlayer.x, this.shovelPlayer.y];
+      this.shovelPlayer.x = this.pickaxePlayer.x;
+      this.shovelPlayer.y = this.pickaxePlayer.y;
+      this.pickaxePlayer.x = temp[0];
+      this.pickaxePlayer.y = temp[1];
+
+      this.swapKeyPressed = true;
+    } else if (!this.swapKey.isDown && this.swapKeyPressed) {
+        this.swapKeyPressed = false;
     }
     // Shovel Player
     if (this.AKey.isDown) {

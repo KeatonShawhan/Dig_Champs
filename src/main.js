@@ -20,6 +20,10 @@ let config = {
             debug: true
         }
     },
+    fps: {
+        target: 120,
+        forceSetTimeOut: true
+    },
     width: 1000,
     height: 800,
     // scene: [ Menu, grassLevel ]
