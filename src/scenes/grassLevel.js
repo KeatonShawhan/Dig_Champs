@@ -32,31 +32,30 @@ class grassLevel extends Phaser.Scene {
     this.floor = this.physics.add.staticGroup(this.ground);
 
     // shovel player
-    this.shovelPlayer = this.physics.add.sprite(width/2, height-400, 'shovelPlayer').setScale(1);
-    this.shovelPlayer.body.setCollideWorldBounds(true);
-    this.shovelPlayer.body.setGravityY(2000);
+    this.shovelPlayer = new shovelPlayer(this, width/2, height-400, 'shovelPlayer');
     this.physics.add.collider(this.shovelPlayer, this.floor);
 
-    // pickaxe player
-    this.pickaxePlayer = this.physics.add.sprite((width/2)-100, height-400, 'pickaxePlayer').setScale(1);
-    this.pickaxePlayer.body.setCollideWorldBounds(true);
-    this.pickaxePlayer.body.setGravityY(2000);
+    // shovel player
+    this.pickaxePlayer = new pickaxePlayer(this, width/2-200, height-400, 'pickaxePlayer');
     this.physics.add.collider(this.pickaxePlayer, this.floor);
 
     // collision between players
     this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
 
-
-    // camera setup
+    // camera setup (work in progress)
     this.cameras.main.startFollow(this.shovelPlayer, true, 0.1, 0.1);
     this.cameras.main.setBounds(0, 0, width/2, height/2);
 
-    // movement keys
+    // movement keys for shovel
     this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.DKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
+    // movement keys for pickaxe
+    this.leftArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+    this.rightArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+    
     // swap places key
-    this.swapKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.swapKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.swapKeyPressed = false; // Flag to track key press state
 
 
@@ -77,15 +76,8 @@ class grassLevel extends Phaser.Scene {
     } else if (!this.swapKey.isDown && this.swapKeyPressed) {
         this.swapKeyPressed = false;
     }
-    // Shovel Player
-    if (this.AKey.isDown) {
-        this.shovelPlayer.x -= 2
-        this.pickaxePlayer.x -= 2
-    }
-    if (this.DKey.isDown) {
-        this.shovelPlayer.x += 2
-        this.pickaxePlayer.x += 2
-    }
+    this.shovelPlayer.update(this.AKey, this.DKey);
+    this.pickaxePlayer.update(this.leftArrow, this.rightArrow);
 
   }
   updateGameTime() {
