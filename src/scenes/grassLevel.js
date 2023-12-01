@@ -28,17 +28,17 @@ class grassLevel extends Phaser.Scene {
     this.background = this.add.sprite(width/2, height/2, 'blue_background').setScale(1);
 
     // ground
-    this.ground = this.add.rectangle(width/2, height, width, 200, 0xb96501).setOrigin(0.5, 0.5);
+    this.ground = this.add.rectangle(width/2, height, width, 400, 0xb96501).setOrigin(0.5, 0.5);
     this.floor = this.physics.add.staticGroup(this.ground);
 
     // shovel player
-    this.shovelPlayer = this.physics.add.sprite(width/2, height-200, 'shovelPlayer').setScale(1);
+    this.shovelPlayer = this.physics.add.sprite(width/2, height-400, 'shovelPlayer').setScale(1);
     this.shovelPlayer.body.setCollideWorldBounds(true);
     this.shovelPlayer.body.setGravityY(2000);
     this.physics.add.collider(this.shovelPlayer, this.floor);
 
     // pickaxe player
-    this.pickaxePlayer = this.physics.add.sprite((width/2)-100, height-200, 'pickaxePlayer').setScale(1);
+    this.pickaxePlayer = this.physics.add.sprite((width/2)-100, height-400, 'pickaxePlayer').setScale(1);
     this.pickaxePlayer.body.setCollideWorldBounds(true);
     this.pickaxePlayer.body.setGravityY(2000);
     this.physics.add.collider(this.pickaxePlayer, this.floor);
