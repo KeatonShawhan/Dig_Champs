@@ -26,16 +26,16 @@ class Menu extends Phaser.Scene {
     // Black thin stroke (middle layer)
     let textBlackThinStroke = this.add.text(width / 2, 150, 'DIG CHAMPS', {
       fontFamily: '"ArcadeFont"',
-      fontSize: '99px',
+      fontSize: '100px',
       stroke: '#000000',
-      strokeThickness: 3,
+      strokeThickness: 5,
       color: '#00000000'
     });
 
     // Orange fill text (innermost layer)
     let textFill = this.add.text(width / 2, 150, 'DIG CHAMPS', {
       fontFamily: '"ArcadeFont"',
-      fontSize: '99px',
+      fontSize: '100px',
       color: '#d9581b'
     });
 
