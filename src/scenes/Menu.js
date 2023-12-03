@@ -5,6 +5,9 @@ class Menu extends Phaser.Scene {
 
   preload() {
     this.load.image("blue_background", "./assets/blue_background.png");
+    // needs to be changed with real assets
+    this.load.image("shovelPlayer", "./assets/sprite_left_0.png");
+    this.load.image("pickaxePlayer", "./assets/sprite_stop_0.png");
   }
 
   create() {
@@ -13,6 +16,34 @@ class Menu extends Phaser.Scene {
 
     this.background = this.add.sprite(width / 2, height / 2, 'blue_background').setScale(1);
     this.ground = this.add.rectangle(width / 2, height, width, 300, 0xb96501).setOrigin(0.5, 1);
+    this.floor = this.physics.add.staticGroup(this.ground);
+
+    // start setup
+    let startText = this.add.text(width/2, height-200, "PRESS SHIFT TO START", {
+      fontSize: '50px',
+      strokeThickness: 2
+    });
+    startText.setOrigin(0.5, 0.5);
+    this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+
+    // controls setup
+    let controlsText = this.add.text(width/2-200, height-100, "PRESS C FOR CONTROLS", {
+      fontSize: '25px',
+      strokeThickness: 1,
+      color: '#FFFFFFFF'
+    })
+    controlsText.setOrigin(0.5, 0.5);
+    this.CKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+
+    // instructions setup
+    let instructionsText = this.add.text(width/2+200, height-100, "PRESS I FOR INSTRUCTIONS", {
+      fontSize: '25px',
+      strokeThickness: 1,
+      color: '#FFFFFFFF'
+    })
+    instructionsText.setOrigin(0.5, 0.5);
+    this.IKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+
 
     // Yellow stroke text (outermost layer)
     let textStroke = this.add.text(width / 2, 150, 'DIG CHAMPS', {
@@ -42,5 +73,25 @@ class Menu extends Phaser.Scene {
     textStroke.setOrigin(0.5, 0.5);
     textBlackThinStroke.setOrigin(0.5, 0.5);
     textFill.setOrigin(0.5, 0.5);
+
+    // shovel player
+    this.shovelPlayer = new shovelPlayer(this, width/2+50, height-350, 'shovelPlayer');
+    this.physics.add.collider(this.shovelPlayer, this.floor);
+
+    // shovel player
+    this.pickaxePlayer = new pickaxePlayer(this, width/2-50, height-350, 'pickaxePlayer');
+    this.physics.add.collider(this.pickaxePlayer, this.floor);
+  }
+
+  update(){
+    if (this.CKey.isDown){
+      this.scene.start("controlScene");
+    }
+    if (this.shiftKey.isDown){
+      this.scene.start("grassLevel");
+    }
+    if (this.IKey.isDown){
+      this.scene.start("instructionScene");
+    }
   }
 }

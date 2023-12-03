@@ -8,6 +8,7 @@ class grassLevel extends Phaser.Scene {
     // needs to be changed with real assets
     this.load.image("shovelPlayer", "./assets/sprite_left_0.png");
     this.load.image("pickaxePlayer", "./assets/sprite_stop_0.png");
+    
     this.load.image("blue_background", "./assets/blue_background.png");
   }
 
@@ -58,27 +59,19 @@ class grassLevel extends Phaser.Scene {
     this.swapKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.swapKeyPressed = false; // Flag to track key press state
 
-
     this.shovelPlayer_lives = 3;
     this.pickaxePlayer_lives = 3;
+
+    this.currentPlayer = "shovel";
   }
 
   update() {
-    // Check if the swap key was just pressed
-    if (Phaser.Input.Keyboard.JustDown(this.swapKey)) {
-      let temp = [this.shovelPlayer.x, this.shovelPlayer.y];
-      this.shovelPlayer.x = this.pickaxePlayer.x;
-      this.shovelPlayer.y = this.pickaxePlayer.y;
-      this.pickaxePlayer.x = temp[0];
-      this.pickaxePlayer.y = temp[1];
-
-      this.swapKeyPressed = true;
-    } else if (!this.swapKey.isDown && this.swapKeyPressed) {
-        this.swapKeyPressed = false;
+    // Call update only for the current active player
+    if (this.currentPlayer === "shovel") {
+      this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey);
+    } else if (this.currentPlayer === "pickaxe") {
+      this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey);
     }
-    this.shovelPlayer.update(this.AKey, this.DKey);
-    this.pickaxePlayer.update(this.leftArrow, this.rightArrow);
-
   }
   updateGameTime() {
     if (this.shovelPlayer_lives > 0 && this.pickaxePlayer_lives > 0) {
