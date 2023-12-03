@@ -5,10 +5,17 @@ class grassLevel extends Phaser.Scene {
 
   preload() {
     this.load.image('ground', "./assets/grassLevel_ground.png");
+
     // needs to be changed with real assets
     this.load.image("shovelPlayer", "./assets/sprite_left_0.png");
     this.load.image("pickaxePlayer", "./assets/sprite_stop_0.png");
-    
+    this.load.image("snail", './assets/spaceship.png');
+    this.load.image("worm", './assets/border.png');
+
+    // particle anims
+    this.load.image('pixel', './assets/white_pixel.png')
+    this.load.image('5x5', './assets/5x5_white.png')
+
     this.load.image("blue_background", "./assets/blue_background.png");
   }
 
@@ -29,7 +36,7 @@ class grassLevel extends Phaser.Scene {
     this.background = this.add.sprite(width/2, height/2, 'blue_background').setScale(1);
 
     // ground
-    this.ground = this.add.rectangle(width/2, height, width, 400, 0xb96501).setOrigin(0.5, 0.5);
+    this.ground = this.add.rectangle(width/2, height, width*2, 400, 0xb96501).setOrigin(0.5, 0.5);
     this.floor = this.physics.add.staticGroup(this.ground);
 
     // shovel player
@@ -39,6 +46,21 @@ class grassLevel extends Phaser.Scene {
     // shovel player
     this.pickaxePlayer = new pickaxePlayer(this, width/2-200, height-400, 'pickaxePlayer');
     this.physics.add.collider(this.pickaxePlayer, this.floor);
+
+    // snail enemy
+    // Initialize the snail group
+    this.snails = this.physics.add.group({
+      classType: snail,
+      runChildUpdate: true
+    });
+    this.snails.create(width, height-300, 'snail').setScale(0.1); // Replace 100, 200 with the desired x, y position
+    this.physics.add.collider(this.snails, this.floor);
+
+    // worm enemy
+    this.worms = this.physics.add.group({
+      classType: worm,
+      runChildUpdate: true
+    });
 
     // collision between players
     this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
@@ -59,23 +81,50 @@ class grassLevel extends Phaser.Scene {
     this.swapKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.swapKeyPressed = false; // Flag to track key press state
 
-    this.shovelPlayer_lives = 3;
-    this.pickaxePlayer_lives = 3;
+    // attack keys
+    this.shovelAttack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.pickaxeAttack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+
+    this.lives = 3;
 
     this.currentPlayer = "shovel";
+
+    // Collision between enemies and players
+    this.physics.add.overlap(this.shovelPlayer, this.worms, this.loseLife, null, this);
+    this.physics.add.overlap(this.pickaxePlayer, this.snails, this.loseLife, null, this);
   }
 
   update() {
+
     // Call update only for the current active player
     if (this.currentPlayer === "shovel") {
-      this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey);
+      this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer);
     } else if (this.currentPlayer === "pickaxe") {
-      this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey);
+      this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer);
+    }
+
+    // Attack handling
+    if (Phaser.Input.Keyboard.JustDown(this.shovelAttack)) {
+      if (this.currentPlayer === "shovel") {
+          this.shovelPlayer.attack(this.worms);
+      }
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.pickaxeAttack)) {
+      if (this.currentPlayer === "pickaxe") {
+          this.shovelPlayer.attack(this.worms);
+      }
     }
   }
+
   updateGameTime() {
     if (this.shovelPlayer_lives > 0 && this.pickaxePlayer_lives > 0) {
         this.gameTime += 1; // Increment by one second
     }
   }
+  
+  loseLife(player, enemy) {
+    console.log("lost life");
+    this.lives -= 1;
+  }
+  
 }

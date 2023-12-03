@@ -10,7 +10,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
     }
 
-    update(leftArrow, rightArrow, swapKey) {
+    update(leftArrow, rightArrow, swapKey, otherPlayer) {
       // Check if the swap key was just pressed
       if (Phaser.Input.Keyboard.JustDown(swapKey)) {
           let temp = [this.x, this.y];
@@ -21,6 +21,34 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
   
           // Switch control to the shovel player
           this.scene.currentPlayer = "shovel";
+
+          // Create particle effect
+          this.particles = this.scene.add.particles(this.x, this.y+50, '5x5', { 
+            speed: 200,
+            lifespan: 200,
+            quantity: 1,
+            color: '#33ffff'
+          });
+          this.scene.time.addEvent({
+            delay: 200,
+            callback: () => {
+                this.particles.destroy();
+            },
+            callbackScope: this.scene
+          });
+          this.particles2 = this.scene.add.particles(otherPlayer.x, otherPlayer.y+50, '5x5', { 
+            speed: 200,
+            lifespan: 200,
+            quantity: 1,
+            color: '#33ffff'
+          });
+          this.scene.time.addEvent({
+            delay: 200,
+            callback: () => {
+                this.particles2.destroy();
+            },
+            callbackScope: this.scene
+          });
       }
   
       // Only move if the pickaxe player is the current player
@@ -34,5 +62,13 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           this.scene.shovelPlayer.x = this.x-100;
           this.scene.shovelPlayer.y = this.y;
       }
-    } 
+    }
+    // WORK IN PROGRESS
+    attack(snails) {
+      snails.getChildren().forEach(snail => {
+          if (Phaser.Geom.Intersects.RectangleToRectangle(this.getBounds(), snail.getBounds())) {
+              snail.destroyEnemy();
+          }
+      });
+    }
 }
