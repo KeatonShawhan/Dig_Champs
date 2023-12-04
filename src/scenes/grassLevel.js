@@ -93,7 +93,9 @@ class grassLevel extends Phaser.Scene {
 
     // Collision between enemies and players
     this.physics.add.overlap(this.shovelPlayer, this.worms, this.loseLife, null, this);
+    this.physics.add.overlap(this.pickaxePlayer, this.worms, this.loseLife, null, this);
     this.physics.add.overlap(this.pickaxePlayer, this.snails, this.loseLife, null, this);
+    this.physics.add.overlap(this.shovelPlayer, this.snails, this.loseLife, null, this);
   }
 
   update() {
