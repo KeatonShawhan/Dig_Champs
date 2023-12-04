@@ -6,11 +6,12 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
 
         this.body.setCollideWorldBounds(true);
         this.body.setGravityY(2000);
+        this.body.setSize(115, 90).setOffset(10, 30);
 
         scene.add.existing(this);
     }
 
-    update(leftArrow, rightArrow, swapKey, otherPlayer) {
+    update(leftArrow, rightArrow, swapKey, otherPlayer, attackButton) {
       // Check if the swap key was just pressed
       if (Phaser.Input.Keyboard.JustDown(swapKey)) {
           let temp = [this.x, this.y];
@@ -59,9 +60,14 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           if (rightArrow.isDown) {
               this.x += 2;
           }
-          this.scene.shovelPlayer.x = this.x-100;
+          this.scene.shovelPlayer.x = this.x-200;
           this.scene.shovelPlayer.y = this.y;
       }
+
+      if (Phaser.Input.Keyboard.JustDown(attackButton)) {
+        // spawn hurt box
+      }
+
     }
     // WORK IN PROGRESS
     attack(snails) {

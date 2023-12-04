@@ -7,10 +7,10 @@ class grassLevel extends Phaser.Scene {
     this.load.image('ground', "./assets/grassLevel_ground.png");
 
     // needs to be changed with real assets
-    this.load.image("shovelPlayer", "./assets/sprite_left_0.png");
-    this.load.image("pickaxePlayer", "./assets/sprite_stop_0.png");
-    this.load.image("snail", './assets/spaceship.png');
-    this.load.image("worm", './assets/border.png');
+    this.load.image("shovelPlayer", "./assets/shovel_player.png");
+    this.load.image("pickaxePlayer", "./assets/pickaxe_player.png");
+    this.load.image("snail", './assets/snail.png');
+    this.load.image("worm", './assets/worm.png');
 
     // particle anims
     this.load.image('pixel', './assets/white_pixel.png')
@@ -36,15 +36,15 @@ class grassLevel extends Phaser.Scene {
     this.background = this.add.sprite(width/2, height/2, 'blue_background').setScale(1);
 
     // ground
-    this.ground = this.add.rectangle(width/2, height, width*2, 400, 0xb96501).setOrigin(0.5, 0.5);
+    this.ground = this.add.rectangle(width / 2, height, width, 300, 0xb96501).setOrigin(0.5, 1);
     this.floor = this.physics.add.staticGroup(this.ground);
 
     // shovel player
-    this.shovelPlayer = new shovelPlayer(this, width/2, height-400, 'shovelPlayer');
+    this.shovelPlayer = new shovelPlayer(this, width/2-100, height-380, 'shovelPlayer').setScale(1.4);
     this.physics.add.collider(this.shovelPlayer, this.floor);
 
-    // shovel player
-    this.pickaxePlayer = new pickaxePlayer(this, width/2-200, height-400, 'pickaxePlayer');
+    // pickaxe player
+    this.pickaxePlayer = new pickaxePlayer(this, width/2+100, height-380, 'pickaxePlayer').setScale(1.4);
     this.physics.add.collider(this.pickaxePlayer, this.floor);
 
     // snail enemy
@@ -53,7 +53,7 @@ class grassLevel extends Phaser.Scene {
       classType: snail,
       runChildUpdate: true
     });
-    this.snails.create(width, height-300, 'snail').setScale(0.1); // Replace 100, 200 with the desired x, y position
+    this.snails.create(width, height-325, 'snail').setScale(1.6); // Replace 100, 200 with the desired x, y position
     this.physics.add.collider(this.snails, this.floor);
 
     // worm enemy
@@ -66,8 +66,10 @@ class grassLevel extends Phaser.Scene {
     this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
 
     // camera setup (work in progress)
+    /*
     this.cameras.main.startFollow(this.shovelPlayer, true, 0.1, 0.1);
     this.cameras.main.setBounds(0, 0, width/2, height/2);
+    */
 
     // movement keys for shovel
     this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -98,22 +100,11 @@ class grassLevel extends Phaser.Scene {
 
     // Call update only for the current active player
     if (this.currentPlayer === "shovel") {
-      this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer);
+      this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack);
     } else if (this.currentPlayer === "pickaxe") {
-      this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer);
+      this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer, this.pickaxeAttack);
     }
 
-    // Attack handling
-    if (Phaser.Input.Keyboard.JustDown(this.shovelAttack)) {
-      if (this.currentPlayer === "shovel") {
-          this.shovelPlayer.attack(this.worms);
-      }
-    }
-    if (Phaser.Input.Keyboard.JustDown(this.pickaxeAttack)) {
-      if (this.currentPlayer === "pickaxe") {
-          this.shovelPlayer.attack(this.worms);
-      }
-    }
   }
 
   updateGameTime() {

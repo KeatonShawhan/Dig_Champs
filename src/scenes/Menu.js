@@ -6,8 +6,8 @@ class Menu extends Phaser.Scene {
   preload() {
     this.load.image("blue_background", "./assets/blue_background.png");
     // needs to be changed with real assets
-    this.load.image("shovelPlayer", "./assets/sprite_left_0.png");
-    this.load.image("pickaxePlayer", "./assets/sprite_stop_0.png");
+    this.load.image("shovelPlayer", "./assets/shovel_player.png");
+    this.load.image("pickaxePlayer", "./assets/pickaxe_player.png");
   }
 
   create() {
@@ -75,11 +75,11 @@ class Menu extends Phaser.Scene {
     textFill.setOrigin(0.5, 0.5);
 
     // shovel player
-    this.shovelPlayer = new shovelPlayer(this, width/2+50, height-350, 'shovelPlayer');
+    this.shovelPlayer = new shovelPlayer(this, width/2-100, height-380, 'shovelPlayer').setScale(1.4);
     this.physics.add.collider(this.shovelPlayer, this.floor);
 
-    // shovel player
-    this.pickaxePlayer = new pickaxePlayer(this, width/2-50, height-350, 'pickaxePlayer');
+    // pickaxe player
+    this.pickaxePlayer = new pickaxePlayer(this, width/2+100, height-380, 'pickaxePlayer').setScale(1.4);
     this.physics.add.collider(this.pickaxePlayer, this.floor);
   }
 

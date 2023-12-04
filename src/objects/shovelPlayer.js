@@ -6,11 +6,12 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
 
         this.body.setCollideWorldBounds(true);
         this.body.setGravityY(2000);
+        this.body.setSize(105, 90).setOffset(10, 30);
 
         scene.add.existing(this);
     }
 
-    update(AKey, DKey, swapKey, otherPlayer) {
+    update(AKey, DKey, swapKey, otherPlayer, attackButton) {
       // Check if the swap key was just pressed
       if (Phaser.Input.Keyboard.JustDown(swapKey)) {
           let temp = [this.x, this.y];
@@ -59,10 +60,13 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
           if (DKey.isDown) {
               this.x += 2;
           }
-          this.scene.pickaxePlayer.x = this.x-100;
+          this.scene.pickaxePlayer.x = this.x-200;
           this.scene.pickaxePlayer.y = this.y;
       }
-      
+
+      if (Phaser.Input.Keyboard.JustDown(attackButton)) {
+        // spawn hurt box
+      }
     }
 
     // WORK IN PROGRESS
