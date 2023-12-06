@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dig Champs</title>
+    <style media='screen' type='text/css'>
+        @font-face {
+          font-family: 'ArcadeFont';
+          src: url('assets/title_font.ttf') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        body {
+          margin: 0;
+        }
+
+        #fontLoader {
+          font-family: 'ArcadeFont';
+          position: absolute;
+          visibility: hidden;
+          white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="fontLoader">.</div>
+    <script src="./lib/phaser.js"></script>
+    <script src="./src/objects/shovelPlayer.js"></script>
+    <script src="./src/scenes/Load.js"></script>
+    <script src="./lib/StateMachine.js"></script>
+    <script src="./src/objects/pickaxePlayer.js"></script>
+    <script src="./src/objects/snail.js"></script>
+    <script src="./src/objects/worm.js"></script>
+    <script src="./src/scenes/grassLevel.js"></script>
+    <script src="./src/scenes/Menu.js"></script>
+    <script src="./src/scenes/Controls.js"></script>
+    <script src="./src/scenes/Instructions.js"></script>
+    <script src="./src/main.js"></script>
+</body>
+</html>
