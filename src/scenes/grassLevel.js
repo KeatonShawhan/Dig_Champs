@@ -106,10 +106,12 @@ class grassLevel extends Phaser.Scene {
     }
   }
   
+  /*
   loseLife(player, enemy) {
     console.log("lost life");
     this.sound.play('hurt');
     this.lives -= 1;
   }
+  */
   
 }
