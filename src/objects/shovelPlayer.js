@@ -5,7 +5,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.body.setCollideWorldBounds(true);
-        this.body.setGravityY(2000);
+        //this.body.setGravityY(2000);
         this.body.setSize(105, 90).setOffset(10, 30);
 
         scene.add.existing(this);
@@ -65,7 +65,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
       }
 
       if (Phaser.Input.Keyboard.JustDown(attackButton)) {
-        // spawn hurt box
+        this.play.anims("shovel_attack_right")
       }
     }
 

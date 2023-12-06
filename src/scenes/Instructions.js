@@ -39,6 +39,7 @@ class Instructions extends Phaser.Scene {
 
   update(){
     if (this.IKey.isDown){
+      this.sound.play('menu_select');
       this.scene.start("menuScene");
     }
   }

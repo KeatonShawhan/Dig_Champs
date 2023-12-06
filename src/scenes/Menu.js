@@ -85,12 +85,15 @@ class Menu extends Phaser.Scene {
 
   update(){
     if (this.CKey.isDown){
+      this.sound.play('menu_select');
       this.scene.start("controlScene");
     }
     if (this.shiftKey.isDown){
+      this.sound.play('menu_select');
       this.scene.start("grassLevel");
     }
     if (this.IKey.isDown){
+      this.sound.play('menu_select');
       this.scene.start("instructionScene");
     }
   }

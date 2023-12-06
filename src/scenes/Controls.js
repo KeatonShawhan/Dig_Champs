@@ -63,6 +63,7 @@ class Controls extends Phaser.Scene {
 
   update(){
     if (this.CKey.isDown){
+      this.sound.play('menu_select');
       this.scene.start("menuScene");
     }
   }

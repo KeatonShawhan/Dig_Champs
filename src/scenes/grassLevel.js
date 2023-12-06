@@ -3,21 +3,6 @@ class grassLevel extends Phaser.Scene {
       super('grassLevel')
   }
 
-  preload() {
-    this.load.image('ground', "./assets/grassLevel_ground.png");
-
-    // needs to be changed with real assets
-    this.load.image("shovelPlayer", "./assets/shovel_player.png");
-    this.load.image("pickaxePlayer", "./assets/pickaxe_player.png");
-    this.load.image("snail", './assets/snail.png');
-    this.load.image("worm", './assets/worm.png');
-
-    // particle anims
-    this.load.image('pixel', './assets/white_pixel.png')
-    this.load.image('5x5', './assets/5x5_white.png')
-
-    this.load.image("blue_background", "./assets/blue_background.png");
-  }
 
   create() {
     // Timer
@@ -29,23 +14,24 @@ class grassLevel extends Phaser.Scene {
         loop: true
     });
 
-    width = game.config.width;
-    height = game.config.height;
 
-    // background
-    this.background = this.add.sprite(width/2, height/2, 'blue_background').setScale(1);
+    const map = this.make.tilemap({key: "map", tileWidth: 32, tileHeight: 32})
+    const tile = map.addTilesetImage("tileset", 'tilesetImage')
 
-    // ground
-    this.ground = this.add.rectangle(width / 2, height, width, 300, 0xb96501).setOrigin(0.5, 1);
-    this.floor = this.physics.add.staticGroup(this.ground);
+    const bgLayer = map.createLayer("background", tile, 0,-128)
+    const obs = map.createLayer("obstacles", tile, 0,-128)
+
+
 
     // shovel player
     this.shovelPlayer = new shovelPlayer(this, width/2-100, height-380, 'shovelPlayer').setScale(1.4);
-    this.physics.add.collider(this.shovelPlayer, this.floor);
+    //this.physics.add.collider(this.shovelPlayer, this.floor);
 
     // pickaxe player
     this.pickaxePlayer = new pickaxePlayer(this, width/2+100, height-380, 'pickaxePlayer').setScale(1.4);
-    this.physics.add.collider(this.pickaxePlayer, this.floor);
+    //this.physics.add.collider(this.pickaxePlayer, this.floor);
+    this.shovelPlayer.setVelocityY(0)
+    this.pickaxePlayer.setVelocityY(0)
 
     // snail enemy
     // Initialize the snail group
@@ -54,7 +40,7 @@ class grassLevel extends Phaser.Scene {
       runChildUpdate: true
     });
     this.snails.create(width, height-325, 'snail').setScale(1.6); // Replace 100, 200 with the desired x, y position
-    this.physics.add.collider(this.snails, this.floor);
+    //this.physics.add.collider(this.snails, this.floor);
 
     // worm enemy
     this.worms = this.physics.add.group({
@@ -65,11 +51,11 @@ class grassLevel extends Phaser.Scene {
     // collision between players
     this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
 
-    // camera setup (work in progress)
-    /*
-    this.cameras.main.startFollow(this.shovelPlayer, true, 0.1, 0.1);
-    this.cameras.main.setBounds(0, 0, width/2, height/2);
-    */
+
+    this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels)
+    this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, 0.25)
+    this.physics.world.setBounds(0,0,map.widthInPixels, map.heightInPixels)
+
 
     // movement keys for shovel
     this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -96,6 +82,9 @@ class grassLevel extends Phaser.Scene {
     this.physics.add.overlap(this.pickaxePlayer, this.worms, this.loseLife, null, this);
     this.physics.add.overlap(this.pickaxePlayer, this.snails, this.loseLife, null, this);
     this.physics.add.overlap(this.shovelPlayer, this.snails, this.loseLife, null, this);
+  
+
+  
   }
 
   update() {
@@ -103,7 +92,9 @@ class grassLevel extends Phaser.Scene {
     // Call update only for the current active player
     if (this.currentPlayer === "shovel") {
       this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack);
+      this.cameras.main.startFollow(this.shovelPlayer, true, 0.25, 0.25)
     } else if (this.currentPlayer === "pickaxe") {
+      this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, 0.25)
       this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer, this.pickaxeAttack);
     }
 
@@ -117,6 +108,7 @@ class grassLevel extends Phaser.Scene {
   
   loseLife(player, enemy) {
     console.log("lost life");
+    this.sound.play('hurt');
     this.lives -= 1;
   }
   

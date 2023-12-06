@@ -5,7 +5,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.body.setCollideWorldBounds(true);
-        this.body.setGravityY(2000);
+        //this.body.setGravityY(2000);
         this.body.setSize(115, 90).setOffset(10, 30);
 
         scene.add.existing(this);
@@ -51,21 +51,25 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
             callbackScope: this.scene
           });
       }
-  
+      
       // Only move if the pickaxe player is the current player
       if (this.scene.currentPlayer === "pickaxe") {
           if (leftArrow.isDown) {
               this.x -= 2;
+              this.play("pickaxe_walk_left", true)
+              //this.dir = 'left'
           }
           if (rightArrow.isDown) {
               this.x += 2;
+              this.play("pickaxe_walk_right", true)
           }
+          //this.anims.play(`pickaxe_walk_${this.dir}`, true)
           this.scene.shovelPlayer.x = this.x-200;
           this.scene.shovelPlayer.y = this.y;
       }
 
       if (Phaser.Input.Keyboard.JustDown(attackButton)) {
-        // spawn hurt box
+        this.play("pickaxe_attack_right", true)
       }
 
     }
