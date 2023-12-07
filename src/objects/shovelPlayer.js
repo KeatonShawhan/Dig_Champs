@@ -81,7 +81,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
       }
 
       if (Phaser.Input.Keyboard.JustDown(attackButton)) {
-        this.play.anims("shovel_attack_right")
+        this.play.anims("shovel_attack_left")
       }
     }
 

@@ -27,7 +27,7 @@ class Load extends Phaser.Scene {
     this.anims.create({
         key: 'shovel_attack_left', 
         frameRate: 8,
-        repeat: 1,
+        repeat: 0,
         frames: this.anims.generateFrameNumbers('shovelPlayer', {
             frames:[2, 3, 3, 4]
         })
@@ -36,7 +36,7 @@ class Load extends Phaser.Scene {
     this.anims.create({
       key: 'shovel_attack_right', 
       frameRate: 8,
-      repeat: -1,
+      repeat: 0,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
           frames: [0, 1, 1, 0]
       })
@@ -45,7 +45,7 @@ class Load extends Phaser.Scene {
     this.anims.create({
       key: 'shovel_walk_left', 
       frameRate: 8,
-      repeat: 1,
+      repeat: -1,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
           frames:[2, 3, 3, 2]
       })
@@ -63,18 +63,18 @@ class Load extends Phaser.Scene {
     this.anims.create({
       key: 'pickaxe_attack_left', 
       frameRate: 8,
-      repeat: 1,
+      repeat: 0,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames: [6, 7, 7, 6]
+          frames: [6, 7, 7, 7, 6]
       })
     })
   
     this.anims.create({
       key: 'pickaxe_attack_right', 
-      frameRate: 8,
-      repeat: 1,
+      frameRate: 5,
+      repeat: 0,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames:[4, 5, 4]
+          frames:[4, 5, 5, 5, 4]
       })
     })
   

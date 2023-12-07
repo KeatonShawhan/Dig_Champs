@@ -70,7 +70,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           } 
           else{
             if (this.dir == 'right'){
-              this.play("pickaxe_idle_right")
+              this.play("pickaxe_idle_right", true)
               this.scene.shovelPlayer.play("shovel_idle_right", true)
             } else{
               this.play("pickaxe_idle_left")
@@ -80,12 +80,11 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           //this.anims.play(`pickaxe_walk_${this.dir}`, true)
           this.scene.shovelPlayer.x = this.x-200;
           this.scene.shovelPlayer.y = this.y;
+          
       }
-
       if (Phaser.Input.Keyboard.JustDown(attackButton)) {
-        this.play("pickaxe_attack_right", true)
-      }
-
+        this.play("pickaxe_attack_left",true)
+      } 
     }
 
     // WORK IN PROGRESS
