@@ -7,6 +7,8 @@ class Load extends Phaser.Scene {
         this.load.audio('menu_select', './assets/start.wav');
         this.load.audio('hurt', './assets/hurt.wav');
         this.load.image('tilesetImage', './assets/tileset.png')
+        this.load.image('groundImage', './assets/brown.png')
+        this.load.image('heart', './assets/heart.png')
         this.load.tilemapTiledJSON('map', './assets/level_1.json')
     
         this.load.spritesheet("shovelPlayer", "./assets/shovel_player.png", {frameWidth:128, frameHeight: 128});
@@ -27,7 +29,7 @@ class Load extends Phaser.Scene {
         frameRate: 8,
         repeat: 1,
         frames: this.anims.generateFrameNumbers('shovelPlayer', {
-            frames:[3, 4, 4, 3]
+            frames:[2, 3, 3, 4]
         })
     })
   
@@ -36,7 +38,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: -1,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
-          frames: [1, 2, 2, 1]
+          frames: [0, 1, 1, 0]
       })
     })
   
@@ -45,7 +47,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: 1,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
-          frames:[3, 4, 4, 3]
+          frames:[2, 3, 3, 2]
       })
   })
   
@@ -54,7 +56,7 @@ class Load extends Phaser.Scene {
     frameRate: 8,
     repeat: -1,
     frames: this.anims.generateFrameNumbers('shovelPlayer', {
-        frames: [1, 2, 2, 1]
+        frames: [0, 1, 1, 0]
     })
   })
   
@@ -63,7 +65,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: 1,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames: [7, 8, 8, 7]
+          frames: [6, 7, 7, 6]
       })
     })
   
@@ -72,25 +74,60 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: 1,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames:[5, 6]
+          frames:[4, 5, 4]
       })
     })
   
     this.anims.create({
       key: 'pickaxe_walk_left', 
-      frameRate: 8,
+      frameRate: 5,
       repeat: -1,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames: [3, 4]
+          frames: [2, 3]
       })
     })
   
     this.anims.create({
       key: 'pickaxe_walk_right', 
+      frameRate: 5,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('pickaxePlayer', {
+          frames:[0, 1]
+      })
+    })
+
+    this.anims.create({
+      key: 'pickaxe_idle_left', 
       frameRate: 8,
       repeat: -1,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames:[1, 2]
+          frames: [6]
+      })
+    })
+  
+    this.anims.create({
+      key: 'pickaxe_idle_right', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('pickaxePlayer', {
+          frames:[4]
+      })
+    })
+    this.anims.create({
+      key: 'shovel_idle_left', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('shovelPlayer', {
+          frames: [6]
+      })
+    })
+  
+    this.anims.create({
+      key: 'shovel_idle_right', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('shovelPlayer', {
+          frames:[4]
       })
     })
 

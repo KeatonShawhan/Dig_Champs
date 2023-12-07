@@ -9,9 +9,11 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(115, 90).setOffset(10, 30);
 
         scene.add.existing(this);
+        this.dir = "right"
     }
 
     update(leftArrow, rightArrow, swapKey, otherPlayer, attackButton) {
+
       // Check if the swap key was just pressed
       if (Phaser.Input.Keyboard.JustDown(swapKey)) {
           let temp = [this.x, this.y];
@@ -57,11 +59,23 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           if (leftArrow.isDown) {
               this.x -= 2;
               this.play("pickaxe_walk_left", true)
-              //this.dir = 'left'
+              this.scene.shovelPlayer.play("shovel_walk_left", true)
+              this.dir = 'left'
           }
-          if (rightArrow.isDown) {
+          else if (rightArrow.isDown) {
               this.x += 2;
               this.play("pickaxe_walk_right", true)
+              this.scene.shovelPlayer.play("shovel_walk_right", true)
+              this.dir = 'right'
+          } 
+          else{
+            if (this.dir == 'right'){
+              this.play("pickaxe_idle_right")
+              this.scene.shovelPlayer.play("shovel_idle_right", true)
+            } else{
+              this.play("pickaxe_idle_left")
+              this.scene.shovelPlayer.play("shovel_idle_left", true)
+            }
           }
           //this.anims.play(`pickaxe_walk_${this.dir}`, true)
           this.scene.shovelPlayer.x = this.x-200;
@@ -73,6 +87,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
       }
 
     }
+
     // WORK IN PROGRESS
     attack(snails) {
       snails.getChildren().forEach(snail => {
