@@ -9,6 +9,8 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(115, 90).setOffset(10, 30);
 
         scene.add.existing(this);
+        this.attack = false;
+
         this.dir = "right"
     }
 
@@ -53,7 +55,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
             callbackScope: this.scene
           });
       }
-      
+
       // Only move if the pickaxe player is the current player
       if (this.scene.currentPlayer === "pickaxe") {
           if (leftArrow.isDown) {
@@ -69,7 +71,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
               this.dir = 'right'
           } 
           else{
-            if (this.attack == 0){
+            if (this.attack == false){
               if (this.dir == 'right'){
                 this.play("pickaxe_idle_right", true)
                 this.scene.shovelPlayer.play("shovel_idle_right", true)
@@ -84,11 +86,18 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           this.scene.shovelPlayer.y = this.y;
           
       }
-      this.attack = 0
-      if (Phaser.Input.Keyboard.JustDown(attackButton)) {
-        this.attack = 1
-        this.play("pickaxe_attack_left",true)
-        this.attack = 0
+      
+      if (Phaser.Input.Keyboard.JustDown(attackButton) && !this.attack) {
+        this.attack = true;
+        if(this.dir == "left"){
+          this.play("pickaxe_attack_left",true)
+        } else{
+          this.play("pickaxe_attack_right",true)
+        }
+        this.on('animationcomplete', () => {
+          this.attack = false;
+        },this);
+        
       } 
     }
 

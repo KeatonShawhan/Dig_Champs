@@ -7,7 +7,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
         this.body.setCollideWorldBounds(true);
         //this.body.setGravityY(2000);
         this.body.setSize(105, 90).setOffset(10, 30);
-
+        this.attack = false
         scene.add.existing(this);
         this.dir = "right"
     }
@@ -68,20 +68,30 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
             this.dir = 'right'
           }
           else{
-            if (this.dir == 'right'){
-              this.play("shovel_idle_right")
-              this.scene.pickaxePlayer.play("pickaxe_idle_right", true)
-            } else{
-              this.play("shovel_idle_left")
-              this.scene.pickaxePlayer.play("pickaxe_idle_left", true)
+            if(this.attack == false){
+              if (this.dir == 'right'){
+                this.play("shovel_idle_right")
+                this.scene.pickaxePlayer.play("pickaxe_idle_right", true)
+              } else{
+                this.play("shovel_idle_left")
+                this.scene.pickaxePlayer.play("pickaxe_idle_left", true)
+              }
             }
           }
           this.scene.pickaxePlayer.x = this.x-200;
           this.scene.pickaxePlayer.y = this.y;
       }
 
-      if (Phaser.Input.Keyboard.JustDown(attackButton)) {
-        this.play.anims("shovel_attack_left")
+      if (Phaser.Input.Keyboard.JustDown(attackButton) && !this.attack) {
+        this.attack = true;
+        if(this.dir == "left"){
+          this.play("shovel_attack_left",true)
+        } else{
+          this.play("shovel_attack_right",true)
+        }
+        this.on('animationcomplete', () => {
+          this.attack = false;
+        },this);
       }
     }
 
