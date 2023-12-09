@@ -55,20 +55,20 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
   
       // Only move if the shovel player is the current player
       if (this.scene.currentPlayer === "shovel") {
-          if (AKey.isDown) {
+          if (AKey.isDown && !this.attack) {
             this.x -= 2;
             this.play("shovel_walk_left", true)
             this.scene.pickaxePlayer.play("pickaxe_walk_left", true)
             this.dir = 'left'
           }
-          else if (DKey.isDown) {
+          else if (DKey.isDown && !this.attack) {
             this.x += 2;
             this.play("shovel_walk_right", true)
             this.scene.pickaxePlayer.play("pickaxe_walk_right", true)
             this.dir = 'right'
           }
           else{
-            if(this.attack == false){
+            if(this.attack == false ){
               if (this.dir == 'right'){
                 this.play("shovel_idle_right")
                 this.scene.pickaxePlayer.play("pickaxe_idle_right", true)

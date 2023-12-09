@@ -58,13 +58,14 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
 
       // Only move if the pickaxe player is the current player
       if (this.scene.currentPlayer === "pickaxe") {
-          if (leftArrow.isDown) {
+        
+          if (leftArrow.isDown && !this.attack) {
               this.x -= 2;
               this.play("pickaxe_walk_left", true)
               this.scene.shovelPlayer.play("shovel_walk_left", true)
               this.dir = 'left'
           }
-          else if (rightArrow.isDown) {
+          else if (rightArrow.isDown && !this.attack) {
               this.x += 2;
               this.play("pickaxe_walk_right", true)
               this.scene.shovelPlayer.play("shovel_walk_right", true)
