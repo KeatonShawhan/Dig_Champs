@@ -48,11 +48,8 @@ class grassLevel extends Phaser.Scene {
       runChildUpdate: true
     });
     this.snails.create(width, height-290, 'snail').setScale(1.6);
-    //this.snail1.setSize(44, 36);
 
-    //this.snails.create(2100, height-290, 'snail').setScale(1.6);
-    //his.snail2.setSize(44, 36);
-    //this.snail1.setoffset(0, 0); // Replace 100, 200 with the desired x, y position
+    this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
 
     // worm enemy
     this.worms = this.physics.add.group({
@@ -60,6 +57,7 @@ class grassLevel extends Phaser.Scene {
       runChildUpdate: true
     });
     this.worms.create(2000, height-290, 'worm').setScale(1.6);
+    this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
 
 
     // collision between players
