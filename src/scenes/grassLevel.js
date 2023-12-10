@@ -160,6 +160,8 @@ class grassLevel extends Phaser.Scene {
       //this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, 0.25)
     }
 
+
+    //change hitboxes while attacking
     if(pick_attack_state){
         this.pickaxePlayer.setSize(120,50)
         this.pickaxePlayer.setOffset(0,60)
@@ -184,11 +186,13 @@ class grassLevel extends Phaser.Scene {
   }
   
   
+  //snail collisions
   snail_inter(player, enemy) {
     if(pick_attack_state){
       this.enx = enemy.x
       this.eny = enemy.y
       enemy.destroy()
+      //score animation
       this.score_animation.x = this.enx
       this.score_animation.y = this.eny
       this.score_animation.setVisible(true)
@@ -203,11 +207,14 @@ class grassLevel extends Phaser.Scene {
   }
   
   }
+
+  //worm collisions
   worm_inter(player, enemy) {
     if(shovel_attack_state){
       this.enx = enemy.x
       this.eny = enemy.y
       enemy.destroy()
+      //score animation
       this.score_animation.x = this.enx
       this.score_animation.y = this.eny
       this.score_animation.setVisible(true)
