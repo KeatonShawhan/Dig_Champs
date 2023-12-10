@@ -145,6 +145,9 @@ class grassLevel extends Phaser.Scene {
     this.heart1.setScrollFactor(0)
     this.heart2.setScrollFactor(0)
     this.heart3.setScrollFactor(0)
+    
+    // lose life temp timer
+    this.tempTime = 0
   }
 
   update() {
@@ -201,9 +204,13 @@ class grassLevel extends Phaser.Scene {
        this.score_animation.setVisible(false)
       },this);
     } else{
-      console.log("lost life");
-      //this.sound.play('hurt');
-      this.lives -= 1;
+      if ((this.gameTime-this.tempTime) > 1){
+        console.log("lost life");
+        this.tempTime = this.gameTime;
+
+        //this.sound.play('hurt');
+        this.lives -= 1;
+      }
   }
   
   }

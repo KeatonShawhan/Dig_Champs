@@ -81,19 +81,21 @@ class Menu extends Phaser.Scene {
     // pickaxe player
     this.pickaxePlayer = new pickaxePlayer(this, width/2+100, height-380, 'pickaxePlayer').setScale(1.4);
     this.physics.add.collider(this.pickaxePlayer, this.floor);
+
+    this.select = this.sound.add('menu_select', {volume: 0.5});
   }
 
   update(){
     if (this.CKey.isDown){
-      this.sound.play('menu_select');
+      this.select.play();
       this.scene.start("controlScene");
     }
     if (this.shiftKey.isDown){
-      this.sound.play('menu_select');
+      this.select.play();
       this.scene.start("grassLevel");
     }
     if (this.IKey.isDown){
-      this.sound.play('menu_select');
+      this.select.play();
       this.scene.start("instructionScene");
     }
   }

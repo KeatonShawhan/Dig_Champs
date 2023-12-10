@@ -35,11 +35,12 @@ class Instructions extends Phaser.Scene {
     })
     instructionsText.setOrigin(0.5, 0.5);
     this.IKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+    this.select = this.sound.add('menu_select', {volume: 0.5});
   }
 
   update(){
     if (this.IKey.isDown){
-      this.sound.play('menu_select');
+      this.select.play();
       this.scene.start("menuScene");
     }
   }

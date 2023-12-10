@@ -58,12 +58,14 @@ class Controls extends Phaser.Scene {
     })
     controlsText.setOrigin(0.5, 0.5);
     this.CKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+    this.select = this.sound.add('menu_select', {volume: 0.5});
+
 
   }
 
   update(){
     if (this.CKey.isDown){
-      this.sound.play('menu_select');
+      this.select.play();
       this.scene.start("menuScene");
     }
   }
