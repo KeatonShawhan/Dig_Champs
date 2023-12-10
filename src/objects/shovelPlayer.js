@@ -7,7 +7,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
         this.body.setCollideWorldBounds(true);
         //this.body.setGravityY(2000);
         this.body.setSize(105, 90).setOffset(10, 30);
-        this.attack = false
+        shovel_attack_state = false
         scene.add.existing(this);
         this.dir = "right"
     }
@@ -55,20 +55,20 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
   
       // Only move if the shovel player is the current player
       if (this.scene.currentPlayer === "shovel") {
-          if (AKey.isDown && !this.attack) {
+          if (AKey.isDown && !shovel_attack_state) {
             this.x -= 2;
             this.play("shovel_walk_left", true)
             this.scene.pickaxePlayer.play("pickaxe_walk_left", true)
             this.dir = 'left'
           }
-          else if (DKey.isDown && !this.attack) {
+          else if (DKey.isDown && !shovel_attack_state) {
             this.x += 2;
             this.play("shovel_walk_right", true)
             this.scene.pickaxePlayer.play("pickaxe_walk_right", true)
             this.dir = 'right'
           }
           else{
-            if(this.attack == false ){
+            if(shovel_attack_state == false ){
               if (this.dir == 'right'){
                 this.play("shovel_idle_right")
                 this.scene.pickaxePlayer.play("pickaxe_idle_right", true)
@@ -82,15 +82,15 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
           this.scene.pickaxePlayer.y = this.y;
       }
 
-      if (Phaser.Input.Keyboard.JustDown(attackButton) && !this.attack) {
-        this.attack = true;
+      if (Phaser.Input.Keyboard.JustDown(attackButton) && !shovel_attack_state) {
+        shovel_attack_state = true;
         if(this.dir == "left"){
           this.play("shovel_attack_left",true)
         } else{
           this.play("shovel_attack_right",true)
         }
         this.on('animationcomplete', () => {
-          this.attack = false;
+          shovel_attack_state = false;
         },this);
       }
     }

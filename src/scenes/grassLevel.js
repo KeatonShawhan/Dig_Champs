@@ -36,19 +36,31 @@ class grassLevel extends Phaser.Scene {
     this.shovelPlayer.setVelocityY(0)
     this.pickaxePlayer.setVelocityY(0)
 
+    this.shovelPlayer.setSize(80, 100)
+    this.shovelPlayer.setOffset(20,20)
+    this.pickaxePlayer.setSize(80,100)
+    this.pickaxePlayer.setOffset(20,20)
+
     // snail enemy
     // Initialize the snail group
     this.snails = this.physics.add.group({
       classType: snail,
       runChildUpdate: true
     });
-    this.snails.create(width, height-325, 'snail').setScale(1.6); // Replace 100, 200 with the desired x, y position
+    this.snails.create(width, height-290, 'snail').setScale(1.6);
+    //this.snail1.setSize(44, 36);
+
+    //this.snails.create(2100, height-290, 'snail').setScale(1.6);
+    //his.snail2.setSize(44, 36);
+    //this.snail1.setoffset(0, 0); // Replace 100, 200 with the desired x, y position
 
     // worm enemy
     this.worms = this.physics.add.group({
       classType: worm,
       runChildUpdate: true
     });
+    this.worms.create(2000, height-290, 'worm').setScale(1.6);
+
 
     // collision between players
     this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
@@ -80,10 +92,10 @@ class grassLevel extends Phaser.Scene {
     this.currentPlayer = "pickaxe";
 
     // Collision between enemies and players
-    this.physics.add.overlap(this.shovelPlayer, this.worms, this.loseLife, null, this);
-    this.physics.add.overlap(this.pickaxePlayer, this.worms, this.loseLife, null, this);
-    this.physics.add.overlap(this.pickaxePlayer, this.snails, this.loseLife, null, this);
-    this.physics.add.overlap(this.shovelPlayer, this.snails, this.loseLife, null, this);
+    this.physics.add.overlap(this.shovelPlayer, this.worms, this.worm_inter, null, this);
+    this.physics.add.overlap(this.pickaxePlayer, this.worms, this.worm_inter, null, this);
+    this.physics.add.overlap(this.pickaxePlayer, this.snails, this.snail_inter, null, this);
+    this.physics.add.overlap(this.shovelPlayer, this.snails, this.snail_inter, null, this);
     
     this.score = 0
     //score label
@@ -111,6 +123,9 @@ class grassLevel extends Phaser.Scene {
       fontSize: '50px',
       color: '#d9581b'
     });
+
+    this.score_animation = this.add.sprite(this.enx, this.eny, "500_score")
+    this.score_animation.setVisible(false)
 
     textStroke.setOrigin(0.5, 0.5);
     textBlackThinStroke.setOrigin(0.5, 0.5);
@@ -147,6 +162,21 @@ class grassLevel extends Phaser.Scene {
       //this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, 0.25)
     }
 
+    if(pick_attack_state){
+        this.pickaxePlayer.setSize(120,50)
+        this.pickaxePlayer.setOffset(0,60)
+    } else{
+        this.pickaxePlayer.setSize(80,100)
+        this.pickaxePlayer.setOffset(20,20)
+    }
+    if(shovel_attack_state){
+      this.shovelPlayer.setSize(120,50)
+      this.shovelPlayer.setOffset(0,60)
+  } else{
+      this.shovelPlayer.setSize(80,100)
+      this.shovelPlayer.setOffset(20,20)
+  }
+
   }
 
   updateGameTime() {
@@ -155,12 +185,46 @@ class grassLevel extends Phaser.Scene {
     }
   }
   
-  /*
-  loseLife(player, enemy) {
-    console.log("lost life");
-    this.sound.play('hurt');
-    this.lives -= 1;
-  }
-  */
   
+  snail_inter(player, enemy) {
+    if(pick_attack_state){
+      this.enx = enemy.x
+      this.eny = enemy.y
+      enemy.destroy()
+      this.score_animation.x = this.enx
+      this.score_animation.y = this.eny
+      this.score_animation.setVisible(true)
+      this.score_animation.play("1000_anim", true)
+      this.score_animation.on('animationcomplete', () => {
+       this.score_animation.setVisible(false)
+      },this);
+    } else{
+      console.log("lost life");
+      //this.sound.play('hurt');
+      this.lives -= 1;
+  }
+  
+  }
+  worm_inter(player, enemy) {
+    if(shovel_attack_state){
+      this.enx = enemy.x
+      this.eny = enemy.y
+      enemy.destroy()
+      this.score_animation.x = this.enx
+      this.score_animation.y = this.eny
+      this.score_animation.setVisible(true)
+      this.score_animation.play("500_anim", true)
+      this.score_animation.on('animationcomplete', () => {
+       this.score_animation.setVisible(false)
+      },this);
+
+      
+    } else{
+      console.log("lost life");
+      //this.sound.play('hurt');
+      this.lives -= 1;
+  }
+  
+  }
+
 }

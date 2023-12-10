@@ -30,6 +30,9 @@ let config = {
     // scene: [ Instructions ]
 }
 
+let pick_attack_state = "false"
+let shovel_attack_state = "true"
+
 let game = new Phaser.Game(config)
 
 let cursors

@@ -9,7 +9,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(115, 90).setOffset(10, 30);
 
         scene.add.existing(this);
-        this.attack = false;
+        pick_attack_state = false;
 
         this.dir = "right"
     }
@@ -59,20 +59,20 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
       // Only move if the pickaxe player is the current player
       if (this.scene.currentPlayer === "pickaxe") {
         
-          if (leftArrow.isDown && !this.attack) {
+          if (leftArrow.isDown && !pick_attack_state) {
               this.x -= 2;
               this.play("pickaxe_walk_left", true)
               this.scene.shovelPlayer.play("shovel_walk_left", true)
               this.dir = 'left'
           }
-          else if (rightArrow.isDown && !this.attack) {
+          else if (rightArrow.isDown && !pick_attack_state) {
               this.x += 2;
               this.play("pickaxe_walk_right", true)
               this.scene.shovelPlayer.play("shovel_walk_right", true)
               this.dir = 'right'
           } 
           else{
-            if (this.attack == false){
+            if (pick_attack_state == false){
               if (this.dir == 'right'){
                 this.play("pickaxe_idle_right", true)
                 this.scene.shovelPlayer.play("shovel_idle_right", true)
@@ -88,21 +88,21 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
           
       }
       
-      if (Phaser.Input.Keyboard.JustDown(attackButton) && !this.attack) {
-        this.attack = true;
+      if (Phaser.Input.Keyboard.JustDown(attackButton) && !pick_attack_state) {
+        pick_attack_state = true;
         if(this.dir == "left"){
           this.play("pickaxe_attack_left",true)
         } else{
           this.play("pickaxe_attack_right",true)
         }
         this.on('animationcomplete', () => {
-          this.attack = false;
+          pick_attack_state = false;
         },this);
         
       } 
     }
 
-    // WORK IN PROGRESS
+    // // WORK IN PROGRESS
     attack(snails) {
       snails.getChildren().forEach(snail => {
           if (Phaser.Geom.Intersects.RectangleToRectangle(this.getBounds(), snail.getBounds())) {

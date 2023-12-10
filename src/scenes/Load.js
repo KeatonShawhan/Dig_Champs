@@ -13,8 +13,13 @@ class Load extends Phaser.Scene {
     
         this.load.spritesheet("shovelPlayer", "./assets/shovel_player.png", {frameWidth:128, frameHeight: 128});
         this.load.spritesheet("pickaxePlayer", "./assets/pickaxe_player.png", {frameWidth:128, frameHeight: 128});
-        this.load.image("snail", './assets/snail.png');
-        this.load.image("worm", './assets/worm.png');
+        this.load.spritesheet("snail", "./assets/snail.png", {frameWidth:64, frameHeight: 64});
+        this.load.spritesheet("worm", "./assets/worm.png", {frameWidth:64, frameHeight: 64});
+        this.load.spritesheet("500_score", "./assets/500score.png", {frameWidth:54, frameHeight: 54});
+        this.load.spritesheet("1000_score", "./assets/1000score.png", {frameWidth:54, frameHeight: 54});
+
+
+
     
         // particle anims
         this.load.image('pixel', './assets/white_pixel.png')
@@ -23,13 +28,35 @@ class Load extends Phaser.Scene {
 
     create() {
         
-            //animation
+    //animation
+    this.anims.create({
+      key: '500_anim', 
+      frameRate: 24,
+      repeat: 0,
+      frames: this.anims.generateFrameNumbers('500_score', {
+          start: 0,
+          end: 5,
+          first: 0
+      })
+    })
+
+    this.anims.create({
+      key: '1000_anim', 
+      frameRate: 24,
+      repeat: 0,
+      frames: this.anims.generateFrameNumbers('1000_score', {
+          start: 0,
+          end: 5,
+          first: 0
+      })
+    })
+
     this.anims.create({
         key: 'shovel_attack_left', 
         frameRate: 8,
         repeat: 0,
         frames: this.anims.generateFrameNumbers('shovelPlayer', {
-            frames:[7,6]
+            frames:[7]
         })
     })
   
@@ -38,7 +65,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: 0,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
-          frames: [5, 4]
+          frames: [5]
       })
     })
   
@@ -47,7 +74,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: -1,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
-          frames:[2, 3, 3, 2]
+          frames:[2, 3]
       })
   })
   
@@ -56,7 +83,7 @@ class Load extends Phaser.Scene {
     frameRate: 8,
     repeat: -1,
     frames: this.anims.generateFrameNumbers('shovelPlayer', {
-        frames: [0, 1, 1, 0]
+        frames: [0, 1]
     })
   })
   
@@ -65,7 +92,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: 0,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames: [7, 6]
+          frames: [7]
       })
     })
   
@@ -74,7 +101,7 @@ class Load extends Phaser.Scene {
       frameRate: 8,
       repeat: 0,
       frames: this.anims.generateFrameNumbers('pickaxePlayer', {
-          frames:[5, 4]
+          frames:[5]
       })
     })
   
@@ -128,6 +155,39 @@ class Load extends Phaser.Scene {
       repeat: -1,
       frames: this.anims.generateFrameNumbers('shovelPlayer', {
           frames:[4]
+      })
+    })
+    this.anims.create({
+      key: 'snail_right', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('snail', {
+          frames:[1]
+      })
+    })
+    this.anims.create({
+      key: 'snail_left', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('snail', {
+          frames:[0]
+      })
+    })
+
+    this.anims.create({
+      key: 'worm_right', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('worm', {
+          frames:[0]
+      })
+    })
+    this.anims.create({
+      key: 'worm_left', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('worm', {
+          frames:[1]
       })
     })
 
