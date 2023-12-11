@@ -64,6 +64,29 @@ class grassLevel extends Phaser.Scene {
 
     //  initialize groups ------------------------------------------------------------------------------------
 
+    // dirt piles
+    this.dirts = this.physics.add.group({
+      classType: dirt,
+      runChildUpdate: true
+    });
+    this.dirts.create(1200, height-320, 'dirt_break').setScale(4);
+    this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
+
+    //rocks
+    this.rocks = this.physics.add.group({
+      classType: rock,
+      runChildUpdate: true
+    });
+    this.rocks.create(800, height-320, 'rock_break').setScale(4);
+    this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
+
+    //diamond - level ender
+    this.diamond = this.physics.add.sprite((map.width * 32) - 200, height - 340, "diamond")
+    console.log(map.width*32)
+    this.diamond.setScale(3)
+    this.diamond.setSize(28,30)
+    this.diamond.play("diamond_float")
+
     // snail enemy
     this.snails = this.physics.add.group({
       classType: snail,
@@ -81,24 +104,7 @@ class grassLevel extends Phaser.Scene {
     this.worms.create(2000, height-290, 'worm').setScale(1.6);
     this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
 
-    // dirt piles
-    this.dirts = this.physics.add.group({
-      classType: dirt,
-      runChildUpdate: true
-    });
-    this.dirts.create(1200, height-320, 'dirt_break').setScale(4);
-    this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
-
-    //rocks
-    this.rocks = this.physics.add.group({
-      classType: rock,
-      runChildUpdate: true
-    });
-    this.rocks.create(800, height-320, 'rock_break').setScale(4);
-    this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
-
-
-    //this.physics.add.collider(sprite, balls);
+    
 
     // collisions ------------------------------------------------------------------------------------
 
@@ -118,6 +124,8 @@ class grassLevel extends Phaser.Scene {
     this.physics.add.overlap(this.pickaxePlayer, this.rocks, this.rock_inter, null, this);
     this.physics.add.overlap(this.shovelPlayer, this.rocks, this.rock_inter, null, this);
 
+    this.physics.add.overlap(this.pickaxePlayer, this.diamond, this.diamond_inter, null, this);
+    
 
    
 
@@ -351,6 +359,26 @@ class grassLevel extends Phaser.Scene {
         this.loseLife();
       }
   }
+  
+  }
+
+  //snail collisions
+  diamond_inter(player, enemy) {
+    if(pick_attack_state){
+      this.enx = enemy.x
+      this.eny = enemy.y
+      enemy.destroy()
+      //score animation
+      this.score_animation.x = this.enx
+      this.score_animation.y = this.eny
+      this.score_animation.setVisible(true)
+      this.score_animation.play("5000_anim", true)
+      this.score_animation.on('animationcomplete', () => {
+       this.score_animation.setVisible(false)
+      },this);
+      this.score += 5000
+      this.updateScore();
+    } 
   
   }
 

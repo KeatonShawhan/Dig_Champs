@@ -18,8 +18,10 @@ class Load extends Phaser.Scene {
         this.load.spritesheet("worm", "./assets/worm.png", {frameWidth:64, frameHeight: 64});
         this.load.spritesheet("500_score", "./assets/500score.png", {frameWidth:54, frameHeight: 54});
         this.load.spritesheet("1000_score", "./assets/1000score.png", {frameWidth:54, frameHeight: 54});
+        this.load.spritesheet("5000_score", "./assets/5000_score.png", {frameWidth:54, frameHeight: 54});
         this.load.spritesheet("dirt_break", "./assets/dirt_break.png", {frameWidth:32, frameHeight: 32});
         this.load.spritesheet("rock_break", "./assets/rock_break.png", {frameWidth:32, frameHeight: 32});
+        this.load.spritesheet("diamond", "./assets/diamond.png", {frameWidth:32, frameHeight: 32});
 
 
 
@@ -50,6 +52,17 @@ class Load extends Phaser.Scene {
       frameRate: 24,
       repeat: 0,
       frames: this.anims.generateFrameNumbers('1000_score', {
+          start: 0,
+          end: 5,
+          first: 0
+      })
+    })
+
+    this.anims.create({
+      key: '5000_anim', 
+      frameRate: 24,
+      repeat: 0,
+      frames: this.anims.generateFrameNumbers('5000_score', {
           start: 0,
           end: 5,
           first: 0
@@ -193,6 +206,14 @@ class Load extends Phaser.Scene {
       repeat: -1,
       frames: this.anims.generateFrameNumbers('worm', {
           frames:[1]
+      })
+    })
+    this.anims.create({
+      key: 'diamond_float', 
+      frameRate: 7,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('diamond', {
+          frames:[0, 1, 2, 3, 2, 1]
       })
     })
 
