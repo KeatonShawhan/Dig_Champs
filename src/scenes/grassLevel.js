@@ -72,6 +72,7 @@ class grassLevel extends Phaser.Scene {
     // movement keys for shovel
     this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.DKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
     // movement keys for pickaxe
     this.leftArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -98,7 +99,7 @@ class grassLevel extends Phaser.Scene {
     this.score = 0
     //score label
     // Yellow stroke text (outermost layer)
-    let textStroke = this.add.text(140, 60, "SCORE:   " + this.score, {
+    this.textStroke = this.add.text(160, 60, "SCORE:   " + this.score, {
       fontFamily: '"ArcadeFont"',
       fontSize: '50px',
       stroke: '#fef154',
@@ -107,7 +108,7 @@ class grassLevel extends Phaser.Scene {
     });
 
     // Black thin stroke (middle layer)
-    let textBlackThinStroke = this.add.text(139,60, "SCORE:   " + this.score, {
+    this.textBlackThinStroke = this.add.text(159,60, "SCORE:   " + this.score, {
       fontFamily: '"ArcadeFont"',
       fontSize: '50px',
       stroke: '#000000',
@@ -116,7 +117,7 @@ class grassLevel extends Phaser.Scene {
     });
 
     // Orange fill text (innermost layer)
-    let textFill = this.add.text(140,60, "SCORE:   " + this.score, {
+    this.textFill = this.add.text(160,60, "SCORE:   " + this.score, {
       fontFamily: '"ArcadeFont"',
       fontSize: '50px',
       color: '#d9581b'
@@ -125,13 +126,13 @@ class grassLevel extends Phaser.Scene {
     this.score_animation = this.add.sprite(this.enx, this.eny, "500_score")
     this.score_animation.setVisible(false)
 
-    textStroke.setOrigin(0.5, 0.5);
-    textBlackThinStroke.setOrigin(0.5, 0.5);
-    textFill.setOrigin(0.5, 0.5);
+    this.textStroke.setOrigin(0.5, 0.5);
+    this.textBlackThinStroke.setOrigin(0.5, 0.5);
+    this.textFill.setOrigin(0.5, 0.5);
 
-    textStroke.setScrollFactor(0)
-    textBlackThinStroke.setScrollFactor(0)
-    textFill.setScrollFactor(0)
+    this.textStroke.setScrollFactor(0)
+    this.textBlackThinStroke.setScrollFactor(0)
+    this.textFill.setScrollFactor(0)
 
     // hearts/lives
     this.heart1 = this.add.sprite(785, 60, "heart")
@@ -148,37 +149,44 @@ class grassLevel extends Phaser.Scene {
     
     // lose life temp timer
     this.tempTime = 0
+
+    // death sound
+    this.death_sound = this.sound.add('lose_game', {volume: 0.5});
   }
 
   update() {
+    if (this.lives > 0){ 
+      // Call update only for the current active player
+      if (this.currentPlayer === "shovel") {
+        this.cameras.main.startFollow(this.shovelPlayer, false, 0.25, 0.25)
+        this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack);
+      } else if (this.currentPlayer === "pickaxe") {
 
-    // Call update only for the current active player
-    if (this.currentPlayer === "shovel") {
-      this.cameras.main.startFollow(this.shovelPlayer, false, 0.25, 0.25)
-      this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack);
-    } else if (this.currentPlayer === "pickaxe") {
-
-      this.cameras.main.startFollow(this.pickaxePlayer, false, 0.25, 0.25)
-      this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer, this.pickaxeAttack);
-      //this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, 0.25)
-    }
+        this.cameras.main.startFollow(this.pickaxePlayer, false, 0.25, 0.25)
+        this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer, this.pickaxeAttack);
+      }
 
 
-    //change hitboxes while attacking
-    if(pick_attack_state){
+      //change hitboxes while attacking
+      if(pick_attack_state){
         this.pickaxePlayer.setSize(120,50)
         this.pickaxePlayer.setOffset(0,60)
-    } else{
+      } else{
         this.pickaxePlayer.setSize(80,100)
         this.pickaxePlayer.setOffset(20,20)
+      }
+      if(shovel_attack_state){
+        this.shovelPlayer.setSize(120,50)
+        this.shovelPlayer.setOffset(0,60)
+      } else{
+        this.shovelPlayer.setSize(80,100)
+        this.shovelPlayer.setOffset(20,20)
+      }
+    }else{
+      if (this.RKey.isDown) {
+        this.scene.restart();
+      }
     }
-    if(shovel_attack_state){
-      this.shovelPlayer.setSize(120,50)
-      this.shovelPlayer.setOffset(0,60)
-  } else{
-      this.shovelPlayer.setSize(80,100)
-      this.shovelPlayer.setOffset(20,20)
-  }
 
   }
 
@@ -203,13 +211,11 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
+      this.updateScore();
     } else{
       if ((this.gameTime-this.tempTime) > 1){
-        console.log("lost life");
         this.tempTime = this.gameTime;
-
-        //this.sound.play('hurt');
-        this.lives -= 1;
+        this.loseLife();
       }
   }
   
@@ -229,14 +235,56 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
-
-      
+      this.updateScore();
     } else{
-      console.log("lost life");
-      //this.sound.play('hurt');
-      this.lives -= 1;
+      if ((this.gameTime-this.tempTime) > 1){
+        this.tempTime = this.gameTime;
+        this.loseLife();
+      }
+    }
+  }
+
+  updateGameTime() {
+    if (this.lives > 0) {
+        this.gameTime += 1; // Increment by one second
+    }
+  }
+
+  loseLife(){
+    if (this.lives == 3){
+      this.heart1.setVisible(false);
+    }else if (this.lives == 2){
+      this.heart2.setVisible(false);
+    }else if (this.lives == 1){
+      this.heart3.setVisible(false);
+      this.death();
+    }
+    this.shovelPlayer.becomeInvincible();
+    this.pickaxePlayer.becomeInvincible();
+    this.lives -= 1;
   }
   
+  updateScore(){
+    this.score += 1000;
+    this.textStroke.setText('SCORE:   ' + this.score);
+    this.textBlackThinStroke.setText('SCORE:   ' + this.score);
+    this.textFill.setText('SCORE:   ' + this.score);
+  }
+
+  death(){
+    if (this.currentPlayer == "shovel"){
+      let overlay = this.add.rectangle(this.shovelPlayer.x, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x000000);
+      this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU DIED: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.restartText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+    }
+    else {
+      let overlay = this.add.rectangle(this.pickaxePlayer.x, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x000000);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y - 100, 'YOU DIED', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.restartText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+    }
+    this.death_sound.play();
   }
 
 }

@@ -103,4 +103,19 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
           }
       });
     }
+
+    becomeInvincible(duration = 1000) {
+      this.scene.tweens.add({
+          targets: this,
+          alpha: 0,
+          duration: 100,
+          ease: 'Linear',
+          yoyo: true,
+          repeat: duration / 100 - 1,
+          onComplete: () => {
+              this.isInvincible = false;
+              this.alpha = 1;
+          }
+      });
+    }
 }
