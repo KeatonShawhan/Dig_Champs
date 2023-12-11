@@ -30,6 +30,8 @@ let config = {
     // scene: [ Instructions ]
 }
 
+let canBeHit = true;
+let overlappingObstacle = false;
 let pick_attack_state = "false"
 let shovel_attack_state = "true"
 

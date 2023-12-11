@@ -5,13 +5,30 @@ class dirt extends Phaser.Physics.Arcade.Sprite {
       scene.physics.add.existing(this);
 
       this.body.setGravityY(2000);
-
-      scene.add.existing(this);
+      this.lives = 3
+      this.frame_num = 0
+      //scene.add.existing(this);
 
   }
   
   update() {
     
+  }
+
+  dirt_becomeInvincible(duration = 1000) {
+    this.scene.tweens.add({
+        targets: this,
+        alpha: 0,
+        duration: 100,
+        ease: 'Linear',
+        yoyo: true,
+        repeat: duration / 100 - 1,
+        onComplete: () => {
+            this.isInvincible = false;
+            this.alpha = 1;
+            this.lives -=1
+        }
+    });
   }
 
   destroyEnemy() {

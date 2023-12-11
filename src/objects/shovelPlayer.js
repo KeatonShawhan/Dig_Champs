@@ -29,7 +29,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
             speed: 200,
             lifespan: 200,
             quantity: 1,
-            color: '#33ffff'
+            tint: 0xed8611
           });
           this.scene.time.addEvent({
             delay: 200,
@@ -42,7 +42,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
             speed: 200,
             lifespan: 200,
             quantity: 1,
-            color: '#33ffff'
+            tint: 0xed8611
           });
           this.scene.time.addEvent({
             delay: 200,
@@ -60,8 +60,10 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
             this.play("shovel_walk_left", true)
             this.scene.pickaxePlayer.play("pickaxe_walk_left", true)
             this.dir = 'left'
+            overlappingObstacle = false
+
           }
-          else if (DKey.isDown && !shovel_attack_state) {
+          else if (DKey.isDown && !shovel_attack_state && !overlappingObstacle) {
             this.x += 2;
             this.play("shovel_walk_right", true)
             this.scene.pickaxePlayer.play("pickaxe_walk_right", true)
@@ -93,15 +95,6 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
           shovel_attack_state = false;
         },this);
       }
-    }
-
-    // WORK IN PROGRESS
-    attack(worms) {
-      worms.getChildren().forEach(worm => {
-          if (Phaser.Geom.Intersects.RectangleToRectangle(this.getBounds(), worm.getBounds())) {
-              worm.destroyEnemy();
-          }
-      });
     }
 
     becomeInvincible(duration = 1000) {

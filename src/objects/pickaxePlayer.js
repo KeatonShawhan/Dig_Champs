@@ -32,7 +32,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
             speed: 200,
             lifespan: 200,
             quantity: 1,
-            color: '#33ffff'
+            tint: 0xed8611
           });
           this.scene.time.addEvent({
             delay: 200,
@@ -45,7 +45,7 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
             speed: 200,
             lifespan: 200,
             quantity: 1,
-            color: '#33ffff'
+            tint: 0xed8611
           });
           this.scene.time.addEvent({
             delay: 200,
@@ -64,8 +64,9 @@ class pickaxePlayer extends Phaser.Physics.Arcade.Sprite {
               this.play("pickaxe_walk_left", true)
               this.scene.shovelPlayer.play("shovel_walk_left", true)
               this.dir = 'left'
+              overlappingObstacle = false
           }
-          else if (rightArrow.isDown && !pick_attack_state) {
+          else if (rightArrow.isDown && !pick_attack_state && !overlappingObstacle) {
               this.x += 2;
               this.play("pickaxe_walk_right", true)
               this.scene.shovelPlayer.play("shovel_walk_right", true)

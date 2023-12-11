@@ -6,9 +6,11 @@ class rock extends Phaser.Physics.Arcade.Sprite {
 
       this.body.setGravityY(2000);
 
-      scene.add.existing(this);
+      //scene.add.existing(this);
       this.dist = 0
       this.dir = "right"
+      this.lives = 3
+      this.frame_num = 0
   }
   
   update() {

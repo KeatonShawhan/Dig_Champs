@@ -27,7 +27,7 @@ class grassLevel extends Phaser.Scene {
     
 
     
-
+  //  initialize players ------------------------------------------------------------------------------------
     // shovel player
     this.shovelPlayer = new shovelPlayer(this, width/2-100, height-350, 'shovelPlayer').setScale(1.4);
 
@@ -40,34 +40,6 @@ class grassLevel extends Phaser.Scene {
     this.shovelPlayer.setOffset(20,20)
     this.pickaxePlayer.setSize(80,100)
     this.pickaxePlayer.setOffset(20,20)
-
-    // snail enemy
-    // Initialize the snail group
-    this.snails = this.physics.add.group({
-      classType: snail,
-      runChildUpdate: true
-    });
-    this.snails.create(width, height-290, 'snail').setScale(1.6);
-
-    this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
-
-    // worm enemy
-    this.worms = this.physics.add.group({
-      classType: worm,
-      runChildUpdate: true
-    });
-    this.worms.create(2000, height-290, 'worm').setScale(1.6);
-    this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
-
-
-    // collision between players
-    this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
-
-    //cameras 
-    this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels-195)
-    this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, .25)
-    this.physics.world.setBounds(0,0,map.widthInPixels, map.heightInPixels)
-
 
     // movement keys for shovel
     this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -86,18 +58,80 @@ class grassLevel extends Phaser.Scene {
     this.shovelAttack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.pickaxeAttack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
+    this.currentPlayer = "pickaxe";
+    this.score = 0
     this.lives = 3;
 
-    this.currentPlayer = "pickaxe";
+    //  initialize groups ------------------------------------------------------------------------------------
+
+    // snail enemy
+    this.snails = this.physics.add.group({
+      classType: snail,
+      runChildUpdate: true
+    });
+    this.snails.create(width, height-290, 'snail').setScale(1.6);
+
+    this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
+
+    // worm enemy
+    this.worms = this.physics.add.group({
+      classType: worm,
+      runChildUpdate: true
+    });
+    this.worms.create(2000, height-290, 'worm').setScale(1.6);
+    this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
+
+    // dirt piles
+    this.dirts = this.physics.add.group({
+      classType: dirt,
+      runChildUpdate: true
+    });
+    this.dirts.create(1200, height-320, 'dirt_break').setScale(4);
+    this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
+
+    //rocks
+    this.rocks = this.physics.add.group({
+      classType: rock,
+      runChildUpdate: true
+    });
+    this.rocks.create(800, height-320, 'rock_break').setScale(4);
+    this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
+
+
+    //this.physics.add.collider(sprite, balls);
+
+    // collisions ------------------------------------------------------------------------------------
+
+    // collision between players
+    this.physics.add.collider(this.pickaxePlayer, this.shovelPlayer);
+
 
     // Collision between enemies and players
+
     this.physics.add.overlap(this.shovelPlayer, this.worms, this.worm_inter, null, this);
     this.physics.add.overlap(this.pickaxePlayer, this.worms, this.worm_inter, null, this);
     this.physics.add.overlap(this.pickaxePlayer, this.snails, this.snail_inter, null, this);
     this.physics.add.overlap(this.shovelPlayer, this.snails, this.snail_inter, null, this);
-    
-    this.score = 0
-    //score label
+
+    this.physics.add.collider(this.shovelPlayer, this.dirts, this.dirt_inter, null, this);
+    this.physics.add.overlap(this.pickaxePlayer, this.dirts, this.dirt_inter, null, this);
+    this.physics.add.overlap(this.pickaxePlayer, this.rocks, this.rock_inter, null, this);
+    this.physics.add.overlap(this.shovelPlayer, this.rocks, this.rock_inter, null, this);
+
+
+   
+
+  
+
+    // collisions ------------------------------------------------------------------------------------
+
+    //cameras 
+    this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels-195)
+    this.cameras.main.startFollow(this.pickaxePlayer, true, 0.25, .25)
+    this.physics.world.setBounds(0,0,map.widthInPixels, map.heightInPixels)
+
+    // score label ------------------------------------------------------------------------------------
+
     // Yellow stroke text (outermost layer)
     this.textStroke = this.add.text(160, 60, "SCORE:   " + this.score, {
       fontFamily: '"ArcadeFont"',
@@ -134,7 +168,8 @@ class grassLevel extends Phaser.Scene {
     this.textBlackThinStroke.setScrollFactor(0)
     this.textFill.setScrollFactor(0)
 
-    // hearts/lives
+
+    // hearts/lives ------------------------------------------------------------------------------------
     this.heart1 = this.add.sprite(785, 60, "heart")
     this.heart2 = this.add.sprite(855, 60, "heart")
     this.heart3 = this.add.sprite(925, 60, "heart")
@@ -155,8 +190,7 @@ class grassLevel extends Phaser.Scene {
   }
 
   update() {
-    if (this.lives > 0){ 
-      // Call update only for the current active player
+    if (this.lives > 0){  // control active player
       if (this.currentPlayer === "shovel") {
         this.cameras.main.startFollow(this.shovelPlayer, false, 0.25, 0.25)
         this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack);
@@ -167,7 +201,7 @@ class grassLevel extends Phaser.Scene {
       }
 
 
-      //change hitboxes while attacking
+      // attack hitboxes ------------------------------------------------------------------------------------
       if(pick_attack_state){
         this.pickaxePlayer.setSize(120,50)
         this.pickaxePlayer.setOffset(0,60)
@@ -187,8 +221,12 @@ class grassLevel extends Phaser.Scene {
         this.scene.restart();
       }
     }
+    
 
   }
+
+
+  // game functions ------------------------------------------------------------------------------------
 
   updateGameTime() {
     if (this.shovelPlayer_lives > 0 && this.pickaxePlayer_lives > 0) {
@@ -196,7 +234,101 @@ class grassLevel extends Phaser.Scene {
     }
   }
   
-  
+  // rock collision
+  rock_inter(player, enemy){
+    if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), enemy.getBounds())) {
+      overlappingObstacle = true;
+    } 
+    if(pick_attack_state){
+      if (canBeHit) {
+        enemy.lives--;
+        enemy.frame_num += 1
+        enemy.setFrame(enemy.frame_num)
+        canBeHit = false;
+        this.particles = this.add.particles(enemy.x, enemy.y, '5x5', { 
+          speed: 200,
+          lifespan: 300,
+          quantity: 1,
+          tint: 0x75e3d16
+        });
+        this.time.addEvent({
+          delay: 300,
+          callback: () => {
+              this.particles.destroy();
+          },
+          callbackScope: this.scene
+        });
+        this.time.delayedCall(500, () => {
+            canBeHit = true;
+        });
+
+        if (enemy.lives <= 0) {
+          this.enx = enemy.x
+          this.eny = enemy.y
+          enemy.destroy()
+          //score animation
+          this.score_animation.x = this.enx
+          this.score_animation.y = this.eny
+          this.score_animation.setVisible(true)
+          this.score_animation.play("1000_anim", true)
+          this.score_animation.on('animationcomplete', () => {
+          this.score_animation.setVisible(false)
+          },this);
+          this.score += 1000
+          this.updateScore();
+          overlappingObstacle = false;
+        }
+      }
+    }
+  }
+
+  dirt_inter(player, enemy){
+    if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), enemy.getBounds())) {
+      overlappingObstacle = true;
+    } 
+    if(shovel_attack_state){
+      if (canBeHit) {
+        enemy.lives--;
+        enemy.frame_num += 1
+        enemy.setFrame(enemy.frame_num)
+        canBeHit = false;
+        this.particles = this.add.particles(enemy.x, enemy.y, '5x5', { 
+          speed: 200,
+          lifespan: 300,
+          quantity: 1,
+          tint: 0x75e3d16
+        });
+        this.time.addEvent({
+          delay: 300,
+          callback: () => {
+              this.particles.destroy();
+          },
+          callbackScope: this.scene
+        });
+        this.time.delayedCall(500, () => {
+            canBeHit = true;
+        });
+
+        if (enemy.lives <= 0) {
+          this.enx = enemy.x
+          this.eny = enemy.y
+          enemy.destroy()
+          //score animation
+          this.score_animation.x = this.enx
+          this.score_animation.y = this.eny
+          this.score_animation.setVisible(true)
+          this.score_animation.play("1000_anim", true)
+          this.score_animation.on('animationcomplete', () => {
+          this.score_animation.setVisible(false)
+          },this);
+          this.score += 1000
+          this.updateScore();
+          overlappingObstacle = false;
+        }
+      }
+    }
+}
+
   //snail collisions
   snail_inter(player, enemy) {
     if(pick_attack_state){
@@ -211,6 +343,7 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
+      this.score += 1000
       this.updateScore();
     } else{
       if ((this.gameTime-this.tempTime) > 1){
@@ -235,6 +368,7 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
+      this.score+=500;
       this.updateScore();
     } else{
       if ((this.gameTime-this.tempTime) > 1){
@@ -265,7 +399,7 @@ class grassLevel extends Phaser.Scene {
   }
   
   updateScore(){
-    this.score += 1000;
+    //this.score += 1000;
     this.textStroke.setText('SCORE:   ' + this.score);
     this.textBlackThinStroke.setText('SCORE:   ' + this.score);
     this.textFill.setText('SCORE:   ' + this.score);

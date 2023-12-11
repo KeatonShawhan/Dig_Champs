@@ -18,6 +18,10 @@ class Load extends Phaser.Scene {
         this.load.spritesheet("worm", "./assets/worm.png", {frameWidth:64, frameHeight: 64});
         this.load.spritesheet("500_score", "./assets/500score.png", {frameWidth:54, frameHeight: 54});
         this.load.spritesheet("1000_score", "./assets/1000score.png", {frameWidth:54, frameHeight: 54});
+        this.load.spritesheet("dirt_break", "./assets/dirt_break.png", {frameWidth:32, frameHeight: 32});
+        this.load.spritesheet("rock_break", "./assets/rock_break.png", {frameWidth:32, frameHeight: 32});
+
+
 
 
 
