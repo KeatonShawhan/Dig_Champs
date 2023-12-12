@@ -9,21 +9,22 @@ class snail extends Phaser.Physics.Arcade.Sprite {
       scene.add.existing(this);
       this.dist = 0
       this.dir = "right"
+      this.move_speed = Phaser.Math.Between(2, 3);
   }
   
   update() {
     if (this.dir == "right"){
       this.play("snail_right", true)
-      this.x += 2;
-      this.dist += 2;
+      this.x += this.move_speed;
+      this.dist += this.move_speed;
       if(this.dist > 300){
         this.dir = "left";
         this.dist = 0;
       }
     } else {
       this.play("snail_left", true)
-      this.x -= 2;
-      this.dist += 2;
+      this.x -= this.move_speed;
+      this.dist += this.move_speed;
       if(this.dist > 300){
         this.dir = "right"
         this.dist = 0;

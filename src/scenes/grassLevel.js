@@ -27,7 +27,59 @@ class grassLevel extends Phaser.Scene {
     
 
     
-  //  initialize players ------------------------------------------------------------------------------------
+  
+
+    //  initialize groups ------------------------------------------------------------------------------------
+
+    // dirt piles
+    this.dirts = this.physics.add.group({
+      classType: dirt,
+      runChildUpdate: true
+    });
+    this.dirts.create(1400, height-320, 'dirt_break').setScale(4);
+    this.dirts.create(1900, height-320, 'dirt_break').setScale(4);
+    this.dirts.create(3000, height-320, 'dirt_break').setScale(4);
+    this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
+
+    //rocks
+    this.rocks = this.physics.add.group({
+      classType: rock,
+      runChildUpdate: true
+    });
+    this.rocks.create(1000, height-320, 'rock_break').setScale(4);
+    this.rocks.create(2400, height-320, 'rock_break').setScale(4);
+    this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
+
+    //diamond - level ender
+    this.diamond = this.physics.add.sprite((map.width * 32) - 200, height - 340, "diamond")
+    console.log(map.width*32)
+    this.diamond.setScale(3)
+    this.diamond.setSize(28,30)
+    this.diamond.play("diamond_float")
+
+    // snail enemy
+    this.snails = this.physics.add.group({
+      classType: snail,
+      runChildUpdate: true
+    });
+    this.snails.create(1200, height-290, 'snail').setScale(1.6);
+    this.snails.create(2000, height-290, 'snail').setScale(1.6);
+    this.snails.create(2700, height-290, 'snail').setScale(1.6);
+
+    this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
+
+    // worm enemy
+    this.worms = this.physics.add.group({
+      classType: worm,
+      runChildUpdate: true
+    });
+    this.worms.create(3000, height-290, 'worm').setScale(1.6);
+    this.worms.create(1700, height-290, 'worm').setScale(1.6);
+
+    this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
+
+
+    //  initialize players ------------------------------------------------------------------------------------
     // shovel player
     this.shovelPlayer = new shovelPlayer(this, width/2-100, height-350, 'shovelPlayer').setScale(1.4);
 
@@ -61,48 +113,6 @@ class grassLevel extends Phaser.Scene {
     this.currentPlayer = "pickaxe";
     this.score = 0
     this.lives = 3;
-
-    //  initialize groups ------------------------------------------------------------------------------------
-
-    // dirt piles
-    this.dirts = this.physics.add.group({
-      classType: dirt,
-      runChildUpdate: true
-    });
-    this.dirts.create(1200, height-320, 'dirt_break').setScale(4);
-    this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
-
-    //rocks
-    this.rocks = this.physics.add.group({
-      classType: rock,
-      runChildUpdate: true
-    });
-    this.rocks.create(800, height-320, 'rock_break').setScale(4);
-    this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
-
-    //diamond - level ender
-    this.diamond = this.physics.add.sprite((map.width * 32) - 200, height - 340, "diamond")
-    console.log(map.width*32)
-    this.diamond.setScale(3)
-    this.diamond.setSize(28,30)
-    this.diamond.play("diamond_float")
-
-    // snail enemy
-    this.snails = this.physics.add.group({
-      classType: snail,
-      runChildUpdate: true
-    });
-    this.snails.create(width, height-290, 'snail').setScale(1.6);
-
-    this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
-
-    // worm enemy
-    this.worms = this.physics.add.group({
-      classType: worm,
-      runChildUpdate: true
-    });
-    this.worms.create(2000, height-290, 'worm').setScale(1.6);
-    this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
 
     
 
@@ -253,11 +263,11 @@ class grassLevel extends Phaser.Scene {
         enemy.frame_num += 1
         enemy.setFrame(enemy.frame_num)
         canBeHit = false;
-        this.particles = this.add.particles(enemy.x, enemy.y, '5x5', { 
+        this.particles = this.add.particles(enemy.x, enemy.y + 20, '5x5', { 
           speed: 200,
           lifespan: 300,
           quantity: 1,
-          tint: 0x75e3d16
+          tint: 0x6b6969
         });
         this.time.addEvent({
           delay: 300,
@@ -300,7 +310,7 @@ class grassLevel extends Phaser.Scene {
         enemy.frame_num += 1
         enemy.setFrame(enemy.frame_num)
         canBeHit = false;
-        this.particles = this.add.particles(enemy.x, enemy.y, '5x5', { 
+        this.particles = this.add.particles(enemy.x, enemy.y + 20, '5x5', { 
           speed: 200,
           lifespan: 300,
           quantity: 1,
