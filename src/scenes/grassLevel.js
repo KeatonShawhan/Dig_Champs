@@ -195,17 +195,32 @@ class grassLevel extends Phaser.Scene {
 
     // death sound
     this.death_sound = this.sound.add('lose_game', {volume: 0.5});
+
+    // background music
+    this.music = this.sound.add('music', {loop: true}).setVolume(0.5);
+    this.music.play();
+
+    // score sound
+    this.scoreSound = this.sound.add('score').setVolume(1);
+
+    // hurt sound
+    this.hurtSound = this.sound.add('hurt').setVolume(0.5);
+
+    // hit object sound
+    this.hitObjectSound = this.sound.add('hit_object').setVolume(0.6);
+
+    // swap positions sound
+    this.swapSound = this.sound.add('swap').setVolume(1);
   }
 
   update() {
     if (this.lives > 0){  // control active player
       if (this.currentPlayer === "shovel") {
         this.cameras.main.startFollow(this.shovelPlayer, false, 0.25, 0.25)
-        this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack);
+        this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack, this.swapSound);
       } else if (this.currentPlayer === "pickaxe") {
-
         this.cameras.main.startFollow(this.pickaxePlayer, false, 0.25, 0.25)
-        this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer, this.pickaxeAttack);
+        this.pickaxePlayer.update(this.leftArrow, this.rightArrow, this.swapKey, this.shovelPlayer, this.pickaxeAttack, this.swapSound);
       }
 
 
@@ -249,6 +264,7 @@ class grassLevel extends Phaser.Scene {
     } 
     if(pick_attack_state){
       if (canBeHit) {
+        this.hitObjectSound.play();
         enemy.lives--;
         enemy.frame_num += 1
         enemy.setFrame(enemy.frame_num)
@@ -296,6 +312,7 @@ class grassLevel extends Phaser.Scene {
     } 
     if(shovel_attack_state){
       if (canBeHit) {
+        this.hitObjectSound.play();
         enemy.lives--;
         enemy.frame_num += 1
         enemy.setFrame(enemy.frame_num)
@@ -415,12 +432,15 @@ class grassLevel extends Phaser.Scene {
   loseLife(){
     if (this.lives == 3){
       this.heart1.setVisible(false);
+      this.hurtSound.play();
     }else if (this.lives == 2){
       this.heart2.setVisible(false);
+      this.hurtSound.play();
     }else if (this.lives == 1){
       this.heart3.setVisible(false);
       this.death();
     }
+    
     this.shovelPlayer.becomeInvincible();
     this.pickaxePlayer.becomeInvincible();
     this.lives -= 1;
@@ -428,6 +448,7 @@ class grassLevel extends Phaser.Scene {
   
   updateScore(){
     //this.score += 1000;
+    this.scoreSound.play();
     this.textStroke.setText('SCORE:   ' + this.score);
     this.textBlackThinStroke.setText('SCORE:   ' + this.score);
     this.textFill.setText('SCORE:   ' + this.score);
@@ -446,6 +467,7 @@ class grassLevel extends Phaser.Scene {
       this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.restartText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
+    this.music.stop();
     this.death_sound.play();
   }
 

@@ -27,7 +27,7 @@ class Menu extends Phaser.Scene {
     this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
     // controls setup
-    let controlsText = this.add.text(width/2-200, height-100, "PRESS C FOR CONTROLS", {
+    let controlsText = this.add.text(width/2-200, height-125, "PRESS C FOR CONTROLS", {
       fontSize: '25px',
       strokeThickness: 1,
       color: '#FFFFFFFF'
@@ -36,13 +36,22 @@ class Menu extends Phaser.Scene {
     this.CKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
 
     // instructions setup
-    let instructionsText = this.add.text(width/2+200, height-100, "PRESS I FOR INSTRUCTIONS", {
+    let instructionsText = this.add.text(width/2+200, height-125, "PRESS I FOR INSTRUCTIONS", {
       fontSize: '25px',
       strokeThickness: 1,
       color: '#FFFFFFFF'
     })
     instructionsText.setOrigin(0.5, 0.5);
     this.IKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+
+    // Credits setup
+    let creditsText = this.add.text(width/2, height-50, "PRESS T FOR CREDITS", {
+      fontSize: '25px',
+      strokeThickness: 1,
+      color: '#FFFFFFFF'
+    })
+    creditsText.setOrigin(0.5, 0.5);
+    this.TKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
 
 
     // Yellow stroke text (outermost layer)
@@ -97,6 +106,10 @@ class Menu extends Phaser.Scene {
     if (this.IKey.isDown){
       this.select.play();
       this.scene.start("instructionScene");
+    }
+    if (this.TKey.isDown){
+      this.select.play();
+      this.scene.start("creditsScene");
     }
   }
 }

@@ -12,7 +12,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
         this.dir = "right"
     }
 
-    update(AKey, DKey, swapKey, otherPlayer, attackButton) {
+    update(AKey, DKey, swapKey, otherPlayer, attackButton, swapSound) {
       // Check if the swap key was just pressed
       if (Phaser.Input.Keyboard.JustDown(swapKey)) {
           let temp = [this.x, this.y];
@@ -23,6 +23,7 @@ class shovelPlayer extends Phaser.Physics.Arcade.Sprite {
   
           // Switch control to the pickaxe player
           this.scene.currentPlayer = "pickaxe";
+          swapSound.play();
 
           // Create particle effect
           this.particles = this.scene.add.particles(this.x, this.y+50, '5x5', { 

@@ -2,7 +2,7 @@
 Dig Champs
 Names: Keaton Shawhan, Zoe Feller
 Date: 12/8/23
-Hours spent: 
+Hours spent: ??
 Points hit ():
 
 */
@@ -26,7 +26,7 @@ let config = {
     },
     width: 1000,
     height: 800,
-    scene: [Load, Menu, Controls, , Instructions, grassLevel ]
+    scene: [Load, Menu, Controls, Credits, Instructions, grassLevel ]
     // scene: [ Instructions ]
 }
 
