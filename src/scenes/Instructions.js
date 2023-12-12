@@ -14,7 +14,7 @@ class Instructions extends Phaser.Scene {
     this.background = this.add.sprite(width / 2, height / 2, 'blue_background').setScale(1);
     this.ground = this.add.rectangle(width / 2, height, width, 300, 0xb96501).setOrigin(0.5, 1);
 
-    let instructionsGoal = this.add.text(width/2, 50, "GOAL: KILL ENEMIES AND DON'T DIE", {
+    let instructionsGoal = this.add.text(width/2, 50, "GOAL: Make it to the end of the level", {
       fontSize: '40px',
       strokeThickness: 2,
       color: '#000000',
