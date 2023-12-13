@@ -131,7 +131,7 @@ class caveLevel extends Phaser.Scene {
       this.beetles.create(1700, height-290, 'beetle').setScale(1.6);
       this.beetles.create(2500, height-290, 'beetle').setScale(1.6);
   
-      this.beetles.children.iterateLocal('setSize', 30, 60, 20,10);
+      this.beetles.children.iterateLocal('setSize', 50, 50, 10,10);
   
   
       // collisions ------------------------------------------------------------------------------------
