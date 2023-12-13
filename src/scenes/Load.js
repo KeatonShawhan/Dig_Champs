@@ -12,14 +12,19 @@ class Load extends Phaser.Scene {
         this.load.audio('hit_object', './assets/hit_object.wav');
         this.load.audio('swap', './assets/swap.wav');
         this.load.image('tilesetImage', './assets/tileset.png')
+        this.load.image('cave_tilesetImage', './assets/level2.png')
         this.load.image('groundImage', './assets/brown.png')
         this.load.image('heart', './assets/heart.png')
         this.load.tilemapTiledJSON('map', './assets/level_1.json')
+        this.load.tilemapTiledJSON('cave_map', './assets/level_2.json')
+
     
         this.load.spritesheet("shovelPlayer", "./assets/shovel_player.png", {frameWidth:128, frameHeight: 128});
         this.load.spritesheet("pickaxePlayer", "./assets/pickaxe_player.png", {frameWidth:128, frameHeight: 128});
         this.load.spritesheet("snail", "./assets/snail.png", {frameWidth:64, frameHeight: 64});
         this.load.spritesheet("worm", "./assets/worm.png", {frameWidth:64, frameHeight: 64});
+        this.load.spritesheet("beetle", "./assets/beetle.png", {frameWidth:64, frameHeight: 64});
+
         this.load.spritesheet("500_score", "./assets/500score.png", {frameWidth:54, frameHeight: 54});
         this.load.spritesheet("1000_score", "./assets/1000score.png", {frameWidth:54, frameHeight: 54});
         this.load.spritesheet("5000_score", "./assets/5000_score.png", {frameWidth:54, frameHeight: 54});
@@ -193,6 +198,40 @@ class Load extends Phaser.Scene {
       repeat: -1,
       frames: this.anims.generateFrameNumbers('snail', {
           frames:[0]
+      })
+    })
+
+    this.anims.create({
+      key: 'beetle_right', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('beetle', {
+          frames:[1]
+      })
+    })
+    this.anims.create({
+      key: 'beetle_left', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('beetle', {
+          frames:[0]
+      })
+    })
+
+    this.anims.create({
+      key: 'beetle_broken_right', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('beetle', {
+          frames:[3]
+      })
+    })
+    this.anims.create({
+      key: 'beetle_broken_left', 
+      frameRate: 8,
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('beetle', {
+          frames:[2]
       })
     })
 

@@ -26,7 +26,7 @@ let config = {
     },
     width: 1000,
     height: 800,
-    scene: [Load, Menu, Controls, Credits, Instructions, grassLevel ]
+    scene: [Load, Menu, Controls, Credits, Instructions, grassLevel, caveLevel ]
     // scene: [ Instructions ]
 }
 

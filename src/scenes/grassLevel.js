@@ -389,7 +389,7 @@ class grassLevel extends Phaser.Scene {
   
   }
 
-  //snail collisions
+  //diamond collisions
   diamond_inter(player, enemy) {
     if(pick_attack_state){
       this.enx = enemy.x
@@ -405,6 +405,7 @@ class grassLevel extends Phaser.Scene {
       },this);
       this.score += 5000
       this.updateScore();
+      this.scene.start("caveLevel");
     } 
   
   }
