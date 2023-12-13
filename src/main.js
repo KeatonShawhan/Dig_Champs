@@ -34,6 +34,7 @@ let canBeHit = true;
 let overlappingObstacle = false;
 let pick_attack_state = "false"
 let shovel_attack_state = "true"
+let game_score = 0
 
 let game = new Phaser.Game(config)
 

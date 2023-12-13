@@ -34,9 +34,11 @@ class caveLevel extends Phaser.Scene {
         classType: dirt,
         runChildUpdate: true
       });
-      this.dirts.create(1400, height-320, 'dirt_break').setScale(4);
-      this.dirts.create(1900, height-320, 'dirt_break').setScale(4);
-      this.dirts.create(3000, height-320, 'dirt_break').setScale(4);
+      this.dirts.create(1000, height-320, 'dirt_break').setScale(4);
+      this.dirts.create(1300, height-320, 'dirt_break').setScale(4);
+      this.dirts.create(2100, height-320, 'dirt_break').setScale(4);
+      this.dirts.create(2600, height-320, 'dirt_break').setScale(4);
+      this.dirts.create(3100, height-320, 'dirt_break').setScale(4);
       this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
   
       //rocks
@@ -44,8 +46,10 @@ class caveLevel extends Phaser.Scene {
         classType: rock,
         runChildUpdate: true
       });
-      this.rocks.create(1000, height-320, 'rock_break').setScale(4);
+      this.rocks.create(1700, height-320, 'rock_break').setScale(4);
       this.rocks.create(2400, height-320, 'rock_break').setScale(4);
+      this.rocks.create(2900, height-320, 'rock_break').setScale(4);
+      this.rocks.create(3300, height-320, 'rock_break').setScale(4);
       this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
   
       //diamond - level ender
@@ -101,9 +105,9 @@ class caveLevel extends Phaser.Scene {
         classType: snail,
         runChildUpdate: true
       });
-      this.snails.create(1200, height-290, 'snail').setScale(1.6);
-      this.snails.create(2000, height-290, 'snail').setScale(1.6);
-      this.snails.create(2700, height-290, 'snail').setScale(1.6);
+      //this.snails.create(1200, height-290, 'snail').setScale(1.6);
+      this.snails.create(2300, height-290, 'snail').setScale(1.6);
+      this.snails.create(3000, height-290, 'snail').setScale(1.6);
   
       this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
   
@@ -112,8 +116,9 @@ class caveLevel extends Phaser.Scene {
         classType: worm,
         runChildUpdate: true
       });
-      this.worms.create(3000, height-290, 'worm').setScale(1.6);
-      this.worms.create(1700, height-290, 'worm').setScale(1.6);
+      this.worms.create(1500, height-290, 'worm').setScale(1.6);
+      this.worms.create(2000, height-290, 'worm').setScale(1.6);
+      this.worms.create(3500, height-290, 'worm').setScale(1.6);
   
       this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
 
@@ -122,7 +127,9 @@ class caveLevel extends Phaser.Scene {
         classType: beetle,
         runChildUpdate: true
       });
-      this.beetles.create(700, height-290, 'beetle').setScale(1.6);
+      this.beetles.create(800, height-290, 'beetle').setScale(1.6);
+      this.beetles.create(1700, height-290, 'beetle').setScale(1.6);
+      this.beetles.create(2500, height-290, 'beetle').setScale(1.6);
   
       this.beetles.children.iterateLocal('setSize', 30, 60, 20,10);
   
@@ -165,7 +172,7 @@ class caveLevel extends Phaser.Scene {
       // score label ------------------------------------------------------------------------------------
   
       // Yellow stroke text (outermost layer)
-      this.textStroke = this.add.text(160, 60, "SCORE:   " + this.score, {
+      this.textStroke = this.add.text(160, 60, "SCORE:   " + game_score, {
         fontFamily: '"ArcadeFont"',
         fontSize: '50px',
         stroke: '#fef154',
@@ -174,7 +181,7 @@ class caveLevel extends Phaser.Scene {
       });
   
       // Black thin stroke (middle layer)
-      this.textBlackThinStroke = this.add.text(159,60, "SCORE:   " + this.score, {
+      this.textBlackThinStroke = this.add.text(159,60, "SCORE:   " + game_score, {
         fontFamily: '"ArcadeFont"',
         fontSize: '50px',
         stroke: '#000000',
@@ -183,7 +190,7 @@ class caveLevel extends Phaser.Scene {
       });
   
       // Orange fill text (innermost layer)
-      this.textFill = this.add.text(160,60, "SCORE:   " + this.score, {
+      this.textFill = this.add.text(160,60, "SCORE:   " + game_score, {
         fontFamily: '"ArcadeFont"',
         fontSize: '50px',
         color: '#d9581b'
@@ -322,7 +329,7 @@ class caveLevel extends Phaser.Scene {
             this.score_animation.on('animationcomplete', () => {
             this.score_animation.setVisible(false)
             },this);
-            this.score += 1000
+            game_score += 1000
             this.updateScore();
             overlappingObstacle = false;
           }
@@ -370,7 +377,7 @@ class caveLevel extends Phaser.Scene {
             this.score_animation.on('animationcomplete', () => {
             this.score_animation.setVisible(false)
             },this);
-            this.score += 1000
+            game_score += 1000
             this.updateScore();
             overlappingObstacle = false;
           }
@@ -392,7 +399,7 @@ class caveLevel extends Phaser.Scene {
         this.score_animation.on('animationcomplete', () => {
          this.score_animation.setVisible(false)
         },this);
-        this.score += 1000
+        game_score += 1000
         this.updateScore();
       } else{
         if ((this.gameTime-this.tempTime) > 1){
@@ -441,18 +448,18 @@ class caveLevel extends Phaser.Scene {
                   this.score_animation.on('animationcomplete', () => {
                   this.score_animation.setVisible(false)
                   },this);
-                  this.score += 1000
+                  game_score += 1000
                   this.updateScore();
                   overlappingObstacle = false;
                 }
               }
         } else{
-            if(!shovel_attack_state && !pick_attack_state){
-                if ((this.gameTime-this.tempTime) > 1){
-                    this.tempTime = this.gameTime;
-                    this.loseLife();
-                }
+            
+            if ((this.gameTime-this.tempTime) > 2){
+                this.tempTime = this.gameTime;
+                this.loseLife();
             }
+            
       }
       if(shovel_attack_state && enemy.state == 1){
         //this.shovelPlayer.becomeInvincible();
@@ -491,18 +498,18 @@ class caveLevel extends Phaser.Scene {
             this.score_animation.on('animationcomplete', () => {
             this.score_animation.setVisible(false)
             },this);
-            this.score += 1000
+            game_score += 1000
             this.updateScore();
             overlappingObstacle = false;
             }
         }
     } else{
-        if(!shovel_attack_state && !pick_attack_state){
-            if ((this.gameTime-this.tempTime) > 1){
+        
+            if ((this.gameTime-this.tempTime) > 2){
                 this.tempTime = this.gameTime;
                 this.loseLife();
             }
-        }
+        
     }
       
       }
@@ -521,7 +528,7 @@ class caveLevel extends Phaser.Scene {
         this.score_animation.on('animationcomplete', () => {
          this.score_animation.setVisible(false)
         },this);
-        this.score += 5000
+        game_score += 5000
         this.updateScore();
       } 
     
@@ -541,7 +548,7 @@ class caveLevel extends Phaser.Scene {
         this.score_animation.on('animationcomplete', () => {
          this.score_animation.setVisible(false)
         },this);
-        this.score+=500;
+        game_score+=500;
         this.updateScore();
       } else{
         if ((this.gameTime-this.tempTime) > 1){
@@ -577,22 +584,22 @@ class caveLevel extends Phaser.Scene {
     updateScore(){
       //this.score += 1000;
       this.scoreSound.play();
-      this.textStroke.setText('SCORE:   ' + this.score);
-      this.textBlackThinStroke.setText('SCORE:   ' + this.score);
-      this.textFill.setText('SCORE:   ' + this.score);
+      this.textStroke.setText('SCORE:   ' + game_score);
+      this.textBlackThinStroke.setText('SCORE:   ' + game_score);
+      this.textFill.setText('SCORE:   ' + game_score);
     }
   
     death(){
       if (this.currentPlayer == "shovel"){
         let overlay = this.add.rectangle(this.shovelPlayer.x, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x000000);
-        this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU DIED: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-        this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+        this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU DIED: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+        this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
         this.restartText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       }
       else {
         let overlay = this.add.rectangle(this.pickaxePlayer.x, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x000000);
         this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y - 100, 'YOU DIED', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-        this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+        this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
         this.restartText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       }
       this.music.stop();

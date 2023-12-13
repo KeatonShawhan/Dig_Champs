@@ -151,7 +151,7 @@ class grassLevel extends Phaser.Scene {
     // score label ------------------------------------------------------------------------------------
 
     // Yellow stroke text (outermost layer)
-    this.textStroke = this.add.text(160, 60, "SCORE:   " + this.score, {
+    this.textStroke = this.add.text(160, 60, "SCORE:   " + game_score, {
       fontFamily: '"ArcadeFont"',
       fontSize: '50px',
       stroke: '#fef154',
@@ -160,7 +160,7 @@ class grassLevel extends Phaser.Scene {
     });
 
     // Black thin stroke (middle layer)
-    this.textBlackThinStroke = this.add.text(159,60, "SCORE:   " + this.score, {
+    this.textBlackThinStroke = this.add.text(159,60, "SCORE:   " + game_score, {
       fontFamily: '"ArcadeFont"',
       fontSize: '50px',
       stroke: '#000000',
@@ -169,7 +169,7 @@ class grassLevel extends Phaser.Scene {
     });
 
     // Orange fill text (innermost layer)
-    this.textFill = this.add.text(160,60, "SCORE:   " + this.score, {
+    this.textFill = this.add.text(160,60, "SCORE:   " + game_score, {
       fontFamily: '"ArcadeFont"',
       fontSize: '50px',
       color: '#d9581b'
@@ -308,7 +308,7 @@ class grassLevel extends Phaser.Scene {
           this.score_animation.on('animationcomplete', () => {
           this.score_animation.setVisible(false)
           },this);
-          this.score += 1000
+          game_score += 1000
           this.updateScore();
           overlappingObstacle = false;
         }
@@ -356,7 +356,7 @@ class grassLevel extends Phaser.Scene {
           this.score_animation.on('animationcomplete', () => {
           this.score_animation.setVisible(false)
           },this);
-          this.score += 1000
+          game_score += 1000
           this.updateScore();
           overlappingObstacle = false;
         }
@@ -378,7 +378,7 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
-      this.score += 1000
+      game_score += 1000
       this.updateScore();
     } else{
       if ((this.gameTime-this.tempTime) > 1){
@@ -403,7 +403,7 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
-      this.score += 5000
+      game_score += 5000
       this.updateScore();
       this.scene.start("caveLevel");
     } 
@@ -424,7 +424,7 @@ class grassLevel extends Phaser.Scene {
       this.score_animation.on('animationcomplete', () => {
        this.score_animation.setVisible(false)
       },this);
-      this.score+=500;
+      game_score+=500;
       this.updateScore();
     } else{
       if ((this.gameTime-this.tempTime) > 1){
@@ -460,22 +460,22 @@ class grassLevel extends Phaser.Scene {
   updateScore(){
     //this.score += 1000;
     this.scoreSound.play();
-    this.textStroke.setText('SCORE:   ' + this.score);
-    this.textBlackThinStroke.setText('SCORE:   ' + this.score);
-    this.textFill.setText('SCORE:   ' + this.score);
+    this.textStroke.setText('SCORE:   ' + game_score);
+    this.textBlackThinStroke.setText('SCORE:   ' + game_score);
+    this.textFill.setText('SCORE:   ' + game_score);
   }
 
   death(){
     if (this.currentPlayer == "shovel"){
       let overlay = this.add.rectangle(this.shovelPlayer.x, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x000000);
-      this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU DIED: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU DIED: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.restartText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
     else {
       let overlay = this.add.rectangle(this.pickaxePlayer.x, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x000000);
       this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y - 100, 'YOU DIED', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + this.score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.restartText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
     this.music.stop();
