@@ -172,7 +172,7 @@ class caveLevel extends Phaser.Scene {
       // score label ------------------------------------------------------------------------------------
   
       // Yellow stroke text (outermost layer)
-      this.textStroke = this.add.text(160, 60, "SCORE:   " + game_score, {
+      this.textStroke = this.add.text(200, 60, "SCORE:   " + game_score, {
         fontFamily: '"ArcadeFont"',
         fontSize: '50px',
         stroke: '#fef154',
@@ -181,7 +181,7 @@ class caveLevel extends Phaser.Scene {
       });
   
       // Black thin stroke (middle layer)
-      this.textBlackThinStroke = this.add.text(159,60, "SCORE:   " + game_score, {
+      this.textBlackThinStroke = this.add.text(199,60, "SCORE:   " + game_score, {
         fontFamily: '"ArcadeFont"',
         fontSize: '50px',
         stroke: '#000000',
@@ -190,7 +190,7 @@ class caveLevel extends Phaser.Scene {
       });
   
       // Orange fill text (innermost layer)
-      this.textFill = this.add.text(160,60, "SCORE:   " + game_score, {
+      this.textFill = this.add.text(200,60, "SCORE:   " + game_score, {
         fontFamily: '"ArcadeFont"',
         fontSize: '50px',
         color: '#d9581b'
@@ -228,8 +228,8 @@ class caveLevel extends Phaser.Scene {
       this.death_sound = this.sound.add('lose_game', {volume: 0.5});
   
       // background music
-      this.music = this.sound.add('music', {loop: true}).setVolume(0.5);
-      this.music.play();
+     // this.music = this.sound.add('music', {loop: true}).setVolume(0.5);
+     // this.music.play();
   
       // score sound
       this.scoreSound = this.sound.add('score').setVolume(1);

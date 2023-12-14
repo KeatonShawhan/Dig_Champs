@@ -13,10 +13,15 @@ class Load extends Phaser.Scene {
         this.load.audio('swap', './assets/swap.wav');
         this.load.image('tilesetImage', './assets/tileset.png')
         this.load.image('cave_tilesetImage', './assets/level2.png')
+        this.load.image('beach_tilesetImage', './assets/level3.png')
         this.load.image('groundImage', './assets/brown.png')
         this.load.image('heart', './assets/heart.png')
+        this.load.image('level1_controls', './assets/level1_controls.png')
+        this.load.image('level2_controls', './assets/level2_controls.png')
+        this.load.image('level3_controls', './assets/level3_controls.png')
         this.load.tilemapTiledJSON('map', './assets/level_1.json')
         this.load.tilemapTiledJSON('cave_map', './assets/level_2.json')
+        this.load.tilemapTiledJSON('beach_map', './assets/level_3.json')
 
     
         this.load.spritesheet("shovelPlayer", "./assets/shovel_player.png", {frameWidth:128, frameHeight: 128});

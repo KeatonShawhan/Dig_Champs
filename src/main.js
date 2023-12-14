@@ -26,7 +26,8 @@ let config = {
     },
     width: 1000,
     height: 800,
-    scene: [Load, Menu, Controls, Credits, Instructions, grassLevel, caveLevel ]
+    autoCenter: true,
+    scene: [Load, Menu, Controls, Level1_Controls, Level2_Controls, Level3_Controls, Credits, Instructions, grassLevel, caveLevel, beachLevel ]
     // scene: [ Instructions ]
 }
 

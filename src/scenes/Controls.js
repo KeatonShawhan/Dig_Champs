@@ -15,35 +15,35 @@ class Controls extends Phaser.Scene {
     this.ground = this.add.rectangle(width / 2, height, width, 300, 0xb96501).setOrigin(0.5, 1);
 
     // shovel player contols
-    let shovelPlayerControlsTitle = this.add.text(width/5, 50, "Shovel Player", {
+    let shovelPlayerControlsTitle = this.add.text(width/4, 100, "Shovel Player", {
       fontSize: '40px',
       strokeThickness: 2,
       color: '#000000',
     })
 
     shovelPlayerControlsTitle.setOrigin(0.5, 0.5);
-    let shovelPlayerControls = this.add.text(width/5, 150, "Move Left: A\n\nMove Right: D\n\nAttack: E", {
+    let shovelPlayerControls = this.add.text(width/4, 225, "Move Left: A\n\nMove Right: D\n\nAttack: E", {
       fontSize: '30px',
       color: '#000000',
     })
     shovelPlayerControls.setOrigin(0.5, 0.5);
 
     // pickaxe player contols
-    let pickaxePlayerControlsTitle = this.add.text(4*width/5, 50, "Pickaxe Player", {
+    let pickaxePlayerControlsTitle = this.add.text(3.7*width/5, 100, "Pickaxe Player", {
       fontSize: '40px',
       strokeThickness: 2,
       color: '#000000',
     })
 
     pickaxePlayerControlsTitle.setOrigin(0.5, 0.5);
-    let pickaxePlayerControls = this.add.text(4*width/5, 150, "Move Left: <-\n\nMove Right: ->\n\nAttack: P", {
+    let pickaxePlayerControls = this.add.text(3.7*width/5, 225, "Move Left: <-\n\nMove Right: ->\n\nAttack: P", {
       fontSize: '30px',
       color: '#000000',
     })
     pickaxePlayerControls.setOrigin(0.5, 0.5);
 
     // swap control
-    let swapControl = this.add.text(2.5*width/5, 350, "Swap Positions: Space", {
+    let swapControl = this.add.text(2.5*width/5, 400, "Swap Positions: Space", {
       fontSize: '40px',
       strokeThickness: 3,
       color: '#000000'

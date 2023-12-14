@@ -1,6 +1,6 @@
-class grassLevel extends Phaser.Scene {
+class beachLevel extends Phaser.Scene {
   constructor() {
-      super('grassLevel')
+      super('beachLevel')
   }
 
 
@@ -16,13 +16,11 @@ class grassLevel extends Phaser.Scene {
 
 
     //create the map
-    const map = this.make.tilemap({key: "map", tileWidth: 32, tileHeight: 32})
-    const tile = map.addTilesetImage("tileset", 'tilesetImage')
-    const brown = map.addTilesetImage("brown_tile", 'groundImage')
+    const map = this.make.tilemap({key: "beach_map", tileWidth: 32, tileHeight: 32})
+    const tile = map.addTilesetImage("level3_tileset", 'beach_tilesetImage')
     
     const bgLayer = map.createLayer("background", tile, 0,-110)
-    const obs = map.createLayer("obstacles", tile, 0,-110)
-    const ground = map.createLayer("ground", brown, 0,-110)
+    
 
     
 
@@ -36,9 +34,9 @@ class grassLevel extends Phaser.Scene {
       classType: dirt,
       runChildUpdate: true
     });
-    //this.dirts.create(1400, height-320, 'dirt_break').setScale(4);
-   // this.dirts.create(1900, height-320, 'dirt_break').setScale(4);
-    //this.dirts.create(3000, height-320, 'dirt_break').setScale(4);
+    this.dirts.create(1300, height-320, 'dirt_break').setScale(4);
+    this.dirts.create(1900, height-320, 'dirt_break').setScale(4);
+    this.dirts.create(3000, height-320, 'dirt_break').setScale(4);
     this.dirts.children.iterateLocal('setSize', 32, 32, 0,0);
 
     //rocks
@@ -46,8 +44,9 @@ class grassLevel extends Phaser.Scene {
       classType: rock,
       runChildUpdate: true
     });
-    //this.rocks.create(1000, height-320, 'rock_break').setScale(4);
-   // this.rocks.create(2400, height-320, 'rock_break').setScale(4);
+    this.rocks.create(1000, height-320, 'rock_break').setScale(4);
+    this.rocks.create(2400, height-320, 'rock_break').setScale(4);
+    this.rocks.create(3400, height-320, 'rock_break').setScale(4);
     this.rocks.children.iterateLocal('setSize', 32, 32, 0,0);
 
     //diamond - level ender
@@ -62,11 +61,11 @@ class grassLevel extends Phaser.Scene {
       classType: snail,
       runChildUpdate: true
     });
-    this.snails.create(1200, height-290, 'snail').setScale(1.6);
-    this.snails.create(2000, height-290, 'snail').setScale(1.6);
-    this.snails.create(2700, height-290, 'snail').setScale(1.6);
-    this.snails.create(3300, height-290, 'snail').setScale(1.6);
-    this.snails.create(3600, height-290, 'snail').setScale(1.6);
+    this.snails.create(1100, height-290, 'snail').setScale(1.6);
+    this.snails.create(1700, height-290, 'snail').setScale(1.6);
+    this.snails.create(2400, height-290, 'snail').setScale(1.6);
+    this.snails.create(2800, height-290, 'snail').setScale(1.6);
+   
 
     this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
 
@@ -75,11 +74,11 @@ class grassLevel extends Phaser.Scene {
       classType: worm,
       runChildUpdate: true
     });
-    this.worms.create(1000, height-290, 'worm').setScale(1.6);
+    this.worms.create(1300, height-290, 'worm').setScale(1.6);
     this.worms.create(1400, height-290, 'worm').setScale(1.6);
-    this.worms.create(1700, height-290, 'worm').setScale(1.6);
-    this.worms.create(2400, height-290, 'worm').setScale(1.6);
-    this.worms.create(3000, height-290, 'worm').setScale(1.6);
+    this.worms.create(2000, height-290, 'worm').setScale(1.6);
+    this.worms.create(3300, height-290, 'worm').setScale(1.6);
+    
 
 
     this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
@@ -411,7 +410,7 @@ class grassLevel extends Phaser.Scene {
       },this);
       game_score += 5000
       this.updateScore();
-      this.scene.start("level2_controlScene");
+      this.scene.start("level3_controlScene");
     } 
   
   }
