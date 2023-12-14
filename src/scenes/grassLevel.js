@@ -385,8 +385,7 @@ class grassLevel extends Phaser.Scene {
         this.tempTime = this.gameTime;
         this.loseLife();
       }
-  }
-  
+    }
   }
 
   //diamond collisions

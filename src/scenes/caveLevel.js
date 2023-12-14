@@ -64,10 +64,10 @@ class caveLevel extends Phaser.Scene {
   
       //  initialize players ------------------------------------------------------------------------------------
       // shovel player
-      this.shovelPlayer = new shovelPlayer(this, width/2-100, height-350, 'shovelPlayer').setScale(1.4);
+      this.shovelPlayer = new shovelPlayer(this, width/2-400, height-350, 'shovelPlayer').setScale(1.4);
   
       // pickaxe player
-      this.pickaxePlayer = new pickaxePlayer(this, width/2+100, height-350, 'pickaxePlayer').setScale(1.4);
+      this.pickaxePlayer = new pickaxePlayer(this, width/2-200, height-350, 'pickaxePlayer').setScale(1.4);
       this.shovelPlayer.setVelocityY(0)
       this.pickaxePlayer.setVelocityY(0)
   
@@ -411,60 +411,35 @@ class caveLevel extends Phaser.Scene {
     }
     //beetle collisions
     beetle_inter(player, enemy) {
-        if(pick_attack_state && enemy.state == 2){
-                //this.shovelPlayer.becomeInvincible();
-                //this.pickaxePlayer.becomeInvincible();
+        if(pick_attack_state){
+          if (enemy.state == 2){
             if (canBeHit) {
-                this.hitObjectSound.play();
-                enemy.state --;
-                //enemy.setFrame(enemy.frame_num)
-                canBeHit = false;
-                this.particles = this.add.particles(enemy.x, enemy.y + 20, '5x5', { 
-                  speed: 200,
-                  lifespan: 300,
-                  quantity: 1,
-                  tint: 0x6b6969
-                });
-                this.time.addEvent({
-                  delay: 300,
-                  callback: () => {
-                      this.particles.destroy();
-                  },
-                  callbackScope: this.scene
-                });
-                this.time.delayedCall(500, () => {
-                    canBeHit = true;
-                });
-        
-                if (enemy.state <= 0) {
-                  this.enx = enemy.x
-                  this.eny = enemy.y
-                  enemy.destroy()
-                  //score animation
-                  this.score_animation.x = this.enx
-                  this.score_animation.y = this.eny
-                  this.score_animation.setVisible(true)
-                  this.score_animation.play("1000_anim", true)
-                  this.score_animation.on('animationcomplete', () => {
-                  this.score_animation.setVisible(false)
-                  },this);
-                  game_score += 1000
-                  this.updateScore();
-                  overlappingObstacle = false;
-                }
-              }
-        } else{
-            
-            if ((this.gameTime-this.tempTime) > 2){
-                this.tempTime = this.gameTime;
-                this.loseLife();
+              this.hitObjectSound.play();
+              enemy.state --;
+              //enemy.setFrame(enemy.frame_num)
+              canBeHit = false;
+              this.particles = this.add.particles(enemy.x, enemy.y + 20, '5x5', { 
+                speed: 200,
+                lifespan: 300,
+                quantity: 1,
+                tint: 0x6b6969
+              });
+              this.time.addEvent({
+                delay: 300,
+                callback: () => {
+                    this.particles.destroy();
+                },
+                callbackScope: this.scene
+              });
+              this.time.delayedCall(500, () => {
+                  canBeHit = true;
+              });
             }
-            
-      }
-      if(shovel_attack_state && enemy.state == 1){
-        //this.shovelPlayer.becomeInvincible();
-        //this.pickaxePlayer.becomeInvincible();
-        if (canBeHit) {
+          }
+        }
+      if(shovel_attack_state){
+        if (enemy.state == 1){
+          if (canBeHit) {
             this.hitObjectSound.play();
             enemy.state --;
             //enemy.setFrame(enemy.frame_num)
@@ -487,32 +462,31 @@ class caveLevel extends Phaser.Scene {
             });
 
             if (enemy.state <= 0) {
-            this.enx = enemy.x
-            this.eny = enemy.y
-            enemy.destroy()
-            //score animation
-            this.score_animation.x = this.enx
-            this.score_animation.y = this.eny
-            this.score_animation.setVisible(true)
-            this.score_animation.play("1000_anim", true)
-            this.score_animation.on('animationcomplete', () => {
-            this.score_animation.setVisible(false)
-            },this);
-            game_score += 1000
-            this.updateScore();
-            overlappingObstacle = false;
+              this.enx = enemy.x
+              this.eny = enemy.y
+              enemy.destroy()
+              //score animation
+              this.score_animation.x = this.enx
+              this.score_animation.y = this.eny
+              this.score_animation.setVisible(true)
+              this.score_animation.play("1000_anim", true)
+              this.score_animation.on('animationcomplete', () => {
+              this.score_animation.setVisible(false)
+              },this);
+              game_score += 1000
+              this.updateScore();
+              overlappingObstacle = false;
             }
+          }
         }
-    } else{
-        
-            if ((this.gameTime-this.tempTime) > 2){
-                this.tempTime = this.gameTime;
-                this.loseLife();
-            }
-        
-    }
-      
       }
+      if (!shovel_attack_state && !pick_attack_state) {
+        if ((this.gameTime-this.tempTime) > 1){
+          this.tempTime = this.gameTime;
+          this.loseLife();
+        }
+      }
+    }
   
     //diamond collisions
     diamond_inter(player, enemy) {
