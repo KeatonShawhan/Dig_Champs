@@ -224,8 +224,8 @@ class beachLevel extends Phaser.Scene {
     this.death_sound = this.sound.add('lose_game', {volume: 0.5});
 
     // background music
-    this.music = this.sound.add('music', {loop: true}).setVolume(0.5);
-    this.music.play();
+    //this.music = this.sound.add('music', {loop: true}).setVolume(0.5);
+    //this.music.play();
 
     // score sound
     this.scoreSound = this.sound.add('score').setVolume(1);
