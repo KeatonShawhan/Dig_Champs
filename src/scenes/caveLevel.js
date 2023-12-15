@@ -491,7 +491,7 @@ class caveLevel extends Phaser.Scene {
           }
         }
       }
-      if (this.shovelPlayer.x > enemy.x || this.pickaxePlayer.x > enemy.x){
+      if (this.shovelPlayer.x > enemy.x-30 || this.pickaxePlayer.x > enemy.x-30){
         if ((this.gameTime-this.tempTime) > 1){
           this.tempTime = this.gameTime;
           this.loseLife();
