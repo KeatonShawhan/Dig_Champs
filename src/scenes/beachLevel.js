@@ -488,13 +488,13 @@ class beachLevel extends Phaser.Scene {
   death(){
     if (this.currentPlayer == "shovel"){
       let overlay = this.add.rectangle(this.shovelPlayer.x, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x000000);
-      this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU DIED: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'GAME OVER', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.restartText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
     else {
       let overlay = this.add.rectangle(this.pickaxePlayer.x, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x000000);
-      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y - 100, 'YOU DIED', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y - 100, 'GAME OVER', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
       this.restartText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
