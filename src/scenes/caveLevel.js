@@ -249,10 +249,11 @@ class caveLevel extends Phaser.Scene {
   
       // swap positions sound
       this.swapSound = this.sound.add('swap').setVolume(1);
+      this.win = 0
     }
   
     update() {
-      if (lives > 0){  // control active player
+      if (lives > 0 && this.win == 0){  // control active player
         if (this.currentPlayer === "shovel") {
           this.cameras.main.startFollow(this.shovelPlayer, false, 0.25, 0.25)
           this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack, this.swapSound);
@@ -278,6 +279,7 @@ class caveLevel extends Phaser.Scene {
           this.shovelPlayer.setOffset(20,20)
         }
       }else{
+        
         if (this.RKey.isDown) {
           game_score = 0
           lives = 3
@@ -522,8 +524,8 @@ class caveLevel extends Phaser.Scene {
         game_score += 5000
         this.music.stop();
         this.updateScore();
-        this.win();
       } 
+      this.win()
     
     }
   
@@ -601,17 +603,18 @@ class caveLevel extends Phaser.Scene {
   
 
   win(){
+    this.win = 1
     if (this.currentPlayer == "shovel"){
-      let overlay = this.add.rectangle(this.shovelPlayer.x, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x1CE2D5);
-      this.deathText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.finalScoreText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.restartText = this.add.text(this.shovelPlayer.x, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      let overlay = this.add.rectangle(this.shovelPlayer.x - 150, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x1CE2D5);
+      this.deathText = this.add.text(this.shovelPlayer.x - 150, this.shovelPlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.shovelPlayer.x - 150, this.shovelPlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.restartText = this.add.text(this.shovelPlayer.x - 150, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
     else {
-      let overlay = this.add.rectangle(this.pickaxePlayer.x, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x1CE2D5);
-      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.finalScoreText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.restartText = this.add.text(this.pickaxePlayer.x, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      let overlay = this.add.rectangle(this.pickaxePlayer.x - 150, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x1CE2D5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x - 150, this.pickaxePlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x - 150, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.restartText = this.add.text(this.pickaxePlayer.x - 150, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
     }
     this.music.stop();
   }
