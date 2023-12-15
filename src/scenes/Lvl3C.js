@@ -38,7 +38,7 @@ class Level3_Controls extends Phaser.Scene {
     });
 
     // shovel player contols
-    let shovelPlayerControlsTitle = this.add.text(600, 300, "Use SHOVEL to kill \n      WORMS", {
+    let shovelPlayerControlsTitle = this.add.text(600, 300, "Use PICKAXE weaken the  \n      BEETLE", {
       fontSize: '60px',
       strokeThickness: 2,
       color: '#000000',
@@ -47,7 +47,7 @@ class Level3_Controls extends Phaser.Scene {
     shovelPlayerControlsTitle.setOrigin(0.5, 0.5);
 
     // pickaxe player contols
-    let pickaxePlayerControlsTitle = this.add.text(600, 600, "Use PICKAXE to kill \n      SNAILS", {
+    let pickaxePlayerControlsTitle = this.add.text(600, 600, "Use SHOVEL to kill the \n      BEATLE", {
       fontSize: '60px',
       strokeThickness: 2,
       color: '#000000',

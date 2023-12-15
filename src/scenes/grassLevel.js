@@ -118,7 +118,7 @@ class grassLevel extends Phaser.Scene {
 
     this.currentPlayer = "pickaxe";
     this.score = 0
-    this.lives = 3;
+    lives = 3;
 
     
 
@@ -230,7 +230,7 @@ class grassLevel extends Phaser.Scene {
   }
 
   update() {
-    if (this.lives > 0){  // control active player
+    if (lives > 0){  // control active player
       if (this.currentPlayer === "shovel") {
         this.cameras.main.startFollow(this.shovelPlayer, false, 0.25, 0.25)
         this.shovelPlayer.update(this.AKey, this.DKey, this.swapKey, this.pickaxePlayer, this.shovelAttack, this.swapSound);
@@ -257,7 +257,9 @@ class grassLevel extends Phaser.Scene {
       }
     }else{
       if (this.RKey.isDown) {
-        this.scene.restart();
+        game_score = 0
+        lives = 3
+        this.scene.start("menuScene");
       }
     }
     
@@ -440,26 +442,26 @@ class grassLevel extends Phaser.Scene {
   }
 
   updateGameTime() {
-    if (this.lives > 0) {
+    if (lives > 0) {
         this.gameTime += 1; // Increment by one second
     }
   }
 
   loseLife(){
-    if (this.lives == 3){
+    if (lives == 3){
       this.heart1.setVisible(false);
       this.hurtSound.play();
-    }else if (this.lives == 2){
+    }else if (lives == 2){
       this.heart2.setVisible(false);
       this.hurtSound.play();
-    }else if (this.lives == 1){
+    }else if (lives == 1){
       this.heart3.setVisible(false);
       this.death();
     }
     
     this.shovelPlayer.becomeInvincible();
     this.pickaxePlayer.becomeInvincible();
-    this.lives -= 1;
+    lives -= 1;
   }
   
   updateScore(){

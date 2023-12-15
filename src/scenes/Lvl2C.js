@@ -38,7 +38,7 @@ class Level2_Controls extends Phaser.Scene {
     });
 
     // shovel player contols
-    let shovelPlayerControlsTitle = this.add.text(600, 300, "Use SHOVEL to dig up \n      DIRT PILES", {
+    let shovelPlayerControlsTitle = this.add.text(600, 550, "Use SHOVEL to dig up \n      DIRT PILES", {
       fontSize: '50px',
       strokeThickness: 2,
       color: '#000000',
@@ -47,7 +47,7 @@ class Level2_Controls extends Phaser.Scene {
     shovelPlayerControlsTitle.setOrigin(0.5, 0.5);
 
     // pickaxe player contols
-    let pickaxePlayerControlsTitle = this.add.text(600, 600, "Use PICKAXE to break \n      ROCKS", {
+    let pickaxePlayerControlsTitle = this.add.text(600, 300, "Use PICKAXE to break \n      ROCKS", {
       fontSize: '50px',
       strokeThickness: 2,
       color: '#000000',
