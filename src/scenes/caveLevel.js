@@ -101,8 +101,8 @@ class caveLevel extends Phaser.Scene {
         runChildUpdate: true
       });
       //this.snails.create(1200, height-290, 'snail').setScale(1.6);
-      this.snails.create(2300, height-290, 'snail').setScale(1.6);
-      this.snails.create(3000, height-290, 'snail').setScale(1.6);
+      // this.snails.create(2300, height-290, 'snail').setScale(1.6);
+      // this.snails.create(3000, height-290, 'snail').setScale(1.6);
   
       this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
   
@@ -111,9 +111,9 @@ class caveLevel extends Phaser.Scene {
         classType: worm,
         runChildUpdate: true
       });
-      this.worms.create(1500, height-290, 'worm').setScale(1.6);
-      this.worms.create(2000, height-290, 'worm').setScale(1.6);
-      this.worms.create(3500, height-290, 'worm').setScale(1.6);
+      // this.worms.create(1500, height-290, 'worm').setScale(1.6);
+      // this.worms.create(2000, height-290, 'worm').setScale(1.6);
+      // this.worms.create(3500, height-290, 'worm').setScale(1.6);
   
       this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
 
@@ -122,9 +122,9 @@ class caveLevel extends Phaser.Scene {
         classType: beetle,
         runChildUpdate: true
       });
-      this.beetles.create(800, height-290, 'beetle').setScale(1.6);
-      this.beetles.create(1700, height-290, 'beetle').setScale(1.6);
-      this.beetles.create(2500, height-290, 'beetle').setScale(1.6);
+      // this.beetles.create(800, height-290, 'beetle').setScale(1.6);
+      // this.beetles.create(1700, height-290, 'beetle').setScale(1.6);
+      // this.beetles.create(2500, height-290, 'beetle').setScale(1.6);
   
       this.beetles.children.iterateLocal('setSize', 50, 50, 10,10);
   
@@ -604,18 +604,12 @@ class caveLevel extends Phaser.Scene {
 
   winner(){
     this.win = 1
-    if (this.currentPlayer == "shovel"){
-      let overlay = this.add.rectangle(this.shovelPlayer.x - 180, this.shovelPlayer.y, game.config.width, game.config.height*2, 0x000000);
-      this.deathText = this.add.text(this.shovelPlayer.x - 180, this.shovelPlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.finalScoreText = this.add.text(this.shovelPlayer.x - 180, this.shovelPlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.restartText = this.add.text(this.shovelPlayer.x - 180, this.shovelPlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-    }
-    else {
-      let overlay = this.add.rectangle(this.pickaxePlayer.x - 180, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x1CE2D5);
-      this.finalScoreText = this.add.text(this.pickaxePlayer.x - 180, this.pickaxePlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.finalScoreText = this.add.text(this.pickaxePlayer.x - 180, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-      this.restartText = this.add.text(this.pickaxePlayer.x - 180, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
-    }
+
+      let overlay = this.add.rectangle(this.pickaxePlayer.x - 190, this.pickaxePlayer.y, game.config.width, game.config.height*2, 0x1CE2D5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x - 190, this.pickaxePlayer.y - 100, 'YOU WIN!', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.finalScoreText = this.add.text(this.pickaxePlayer.x - 190, this.pickaxePlayer.y, 'Final Score: ' + game_score, { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+      this.restartText = this.add.text(this.pickaxePlayer.x - 190, this.pickaxePlayer.y + 100, 'Press R to restart', { fontSize: '76px', fill: '#FFF' }).setOrigin(0.5);
+    
     this.music.stop();
   }
 }
