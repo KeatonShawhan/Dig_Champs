@@ -412,6 +412,7 @@ class grassLevel extends Phaser.Scene {
       },this);
       game_score += 5000
       this.updateScore();
+      this.music.stop();
       this.scene.start("level2_controlScene");
     } 
   
