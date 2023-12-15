@@ -212,10 +212,6 @@ class caveLevel extends Phaser.Scene {
       this.heart1 = this.add.sprite(785, 60, "heart")
       this.heart2 = this.add.sprite(855, 60, "heart")
       this.heart3 = this.add.sprite(925, 60, "heart")
-  
-      this.heart1 = this.add.sprite(785, 60, "heart")
-    this.heart2 = this.add.sprite(855, 60, "heart")
-    this.heart3 = this.add.sprite(925, 60, "heart")
 
     
 
