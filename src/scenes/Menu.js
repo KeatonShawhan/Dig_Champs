@@ -101,7 +101,7 @@ class Menu extends Phaser.Scene {
     }
     if (this.shiftKey.isDown){
       this.select.play();
-      this.scene.start("level1_controlScene");
+      this.scene.start("level3_controlScene");
     
     }
     if (this.IKey.isDown){

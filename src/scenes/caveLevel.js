@@ -213,18 +213,29 @@ class caveLevel extends Phaser.Scene {
       this.heart2 = this.add.sprite(855, 60, "heart")
       this.heart3 = this.add.sprite(925, 60, "heart")
   
+      this.heart1 = this.add.sprite(785, 60, "heart")
+    this.heart2 = this.add.sprite(855, 60, "heart")
+    this.heart3 = this.add.sprite(925, 60, "heart")
+
+    
+
+    if(lives == 1){
+      this.heart1.setVisible(false)
+      this.heart2.setVisible(false)
+      this.heart3.setVisible(true)
+    }else if(lives == 2){
+      this.heart1.setVisible(false)
+      this.heart2.setVisible(true)
+      this.heart3.setVisible(true)
+    }else {
       this.heart1.setVisible(true)
       this.heart2.setVisible(true)
       this.heart3.setVisible(true)
-  
-      if (lives == 3){
-      }else if (lives == 2){
-        this.heart3.setVisible(false);
-        this.hurtSound.play();
-      }else if (lives == 1){
-        this.heart2.setVisible(false);
-        this.heart3.setVisible(false);
-      }
+    }
+
+    this.heart1.setScrollFactor(0)
+    this.heart2.setScrollFactor(0)
+    this.heart3.setScrollFactor(0)
       
       // lose life temp timer
       this.tempTime = 0
