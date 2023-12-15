@@ -21,12 +21,7 @@ class caveLevel extends Phaser.Scene {
       
       
       const bgLayer = map.createLayer("background", tile, 0,-110)
-  
-      
-  
-      
-    
-  
+
       //  initialize background groups ------------------------------------------------------------------------------------
   
       // dirt piles
@@ -494,12 +489,20 @@ class caveLevel extends Phaser.Scene {
           }
         }
       }
+      if (this.shovelPlayer.x > enemy.x || this.pickaxePlayer.x > enemy.x){
+        if ((this.gameTime-this.tempTime) > 1){
+          this.tempTime = this.gameTime;
+          this.loseLife();
+        }
+      }
+      /*
       if (!shovel_attack_state && !pick_attack_state) {
         if ((this.gameTime-this.tempTime) > 1){
           this.tempTime = this.gameTime;
           this.loseLife();
         }
       }
+      */
     }
   
     //diamond collisions
