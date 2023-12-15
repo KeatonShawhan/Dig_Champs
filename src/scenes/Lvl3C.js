@@ -47,7 +47,7 @@ class Level3_Controls extends Phaser.Scene {
     shovelPlayerControlsTitle.setOrigin(0.5, 0.5);
 
     // pickaxe player contols
-    let pickaxePlayerControlsTitle = this.add.text(350, 580, "Use SHOVEL to kill\n     the BEATLE", {
+    let pickaxePlayerControlsTitle = this.add.text(350, 580, "Use SHOVEL to kill\n     the BEETLE", {
       fontSize: '50px',
       strokeThickness: 2,
       color: '#000000',

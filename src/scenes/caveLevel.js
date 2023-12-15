@@ -522,6 +522,7 @@ class caveLevel extends Phaser.Scene {
         game_score += 5000
         this.music.stop();
         this.updateScore();
+        this.win();
       } 
     
     }
