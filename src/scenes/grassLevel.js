@@ -52,7 +52,6 @@ class grassLevel extends Phaser.Scene {
 
     //diamond - level ender
     this.diamond = this.physics.add.sprite((map.width * 32) - 200, height - 340, "diamond")
-    console.log(map.width*32)
     this.diamond.setScale(3)
     this.diamond.setSize(28,30)
     this.diamond.play("diamond_float")
