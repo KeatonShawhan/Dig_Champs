@@ -73,7 +73,7 @@ class Level1_Controls extends Phaser.Scene {
   update(){
     if (this.CKey.isDown){
       this.select.play();
-      this.scene.start("caveLevel");
+      this.scene.start("grassLevel");
     }
   }
 }

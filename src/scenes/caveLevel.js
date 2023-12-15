@@ -100,9 +100,9 @@ class caveLevel extends Phaser.Scene {
         classType: snail,
         runChildUpdate: true
       });
-      //this.snails.create(1200, height-290, 'snail').setScale(1.6);
-      // this.snails.create(2300, height-290, 'snail').setScale(1.6);
-      // this.snails.create(3000, height-290, 'snail').setScale(1.6);
+      this.snails.create(1200, height-290, 'snail').setScale(1.6);
+      this.snails.create(2300, height-290, 'snail').setScale(1.6);
+      this.snails.create(3000, height-290, 'snail').setScale(1.6);
   
       this.snails.children.iterateLocal('setSize', 45, 40, 20,20);
   
@@ -111,9 +111,9 @@ class caveLevel extends Phaser.Scene {
         classType: worm,
         runChildUpdate: true
       });
-      // this.worms.create(1500, height-290, 'worm').setScale(1.6);
-      // this.worms.create(2000, height-290, 'worm').setScale(1.6);
-      // this.worms.create(3500, height-290, 'worm').setScale(1.6);
+      this.worms.create(1500, height-290, 'worm').setScale(1.6);
+      this.worms.create(2000, height-290, 'worm').setScale(1.6);
+      this.worms.create(3500, height-290, 'worm').setScale(1.6);
   
       this.worms.children.iterateLocal('setSize', 30, 60, 20,10);
 
@@ -122,9 +122,9 @@ class caveLevel extends Phaser.Scene {
         classType: beetle,
         runChildUpdate: true
       });
-      // this.beetles.create(800, height-290, 'beetle').setScale(1.6);
-      // this.beetles.create(1700, height-290, 'beetle').setScale(1.6);
-      // this.beetles.create(2500, height-290, 'beetle').setScale(1.6);
+      this.beetles.create(800, height-290, 'beetle').setScale(1.6);
+      this.beetles.create(1700, height-290, 'beetle').setScale(1.6);
+      this.beetles.create(2500, height-290, 'beetle').setScale(1.6);
   
       this.beetles.children.iterateLocal('setSize', 50, 50, 10,10);
   
