@@ -2,9 +2,7 @@
 Dig Champs
 Names: Keaton Shawhan, Zoe Feller
 Date: 12/8/23
-Hours spent: ??
-Points hit ():
-
+Hours spent: 80+?
 */
 
 "use strict"
