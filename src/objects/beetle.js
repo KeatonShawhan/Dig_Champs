@@ -10,7 +10,7 @@ class beetle extends Phaser.Physics.Arcade.Sprite {
       this.dist = 0
       this.dir = "right"
       this.state = 2
-      this.move_speed = Phaser.Math.Between(2, 3);
+      this.move_speed = 1
   }
   
   update() {
